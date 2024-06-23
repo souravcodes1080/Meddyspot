@@ -1,1 +1,28 @@
-console.log("hello")
+import express from "express";
+import cors from "cors";
+import bodyParser from "body-parser";
+import dotenv from "dotenv";
+
+import { connectdb } from "./db/index.js";
+import { userRouter } from "./routes/user.route.js";
+
+//middlewares
+const app = express();
+dotenv.config();
+app.use(cors());
+app.use(bodyParser.json());
+
+connectdb();
+
+app.get("/", (req, res) => {
+  res.send("Hello World");
+});
+
+//api endpoints
+app.use("/api/user", userRouter);
+
+
+
+app.listen(process.env.PORT, () => {
+  console.log(`✨ Server is running on port ${process.env.PORT}. ✨`);
+});
