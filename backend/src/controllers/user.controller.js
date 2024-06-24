@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import sendMail, { sendWelcomeMail } from "../utils/nodemailer.util.js";
 import otpGenerator from "otp-generator";
 import { genToken, verifyToken } from "../utils/jwt.util.js";
-import e from "express";
+
 
 const register = async (req, res) => {
   try {

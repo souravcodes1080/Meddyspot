@@ -491,5 +491,41 @@ const sendWelcomeMail = async (email, username) => {
     </html>`,
   });
 };
-export {sendWelcomeMail}
+const sendAppointmentConfirmation = async (email, name, hospital, dr, date, time) => {
+  const transporter = nodemailer.createTransport({
+    host: process.env.SMTP_HOST,
+    port: process.env.SMTP_PORT,
+    secure: false,
+    auth: {
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASSWORD,
+    },
+  });
+
+  await transporter.sendMail({
+    from: process.env.SMTP_USER,
+    to: email,
+    subject: "Appointment Reminder from Med&Care.",
+    text: `Greetings ${name}. Appointment Reminder from Med&Care. Your Appointment is created on ${date}, ${time} in ${hospital}.`,
+    html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    <html dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office" lang="en">
+     <head>
+      <meta charset="UTF-8">
+      <meta content="width=device-width, initial-scale=1" name="viewport">
+      <meta name="x-apple-disable-message-reformatting">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta content="telephone=no" name="format-detection">
+      <title>New Template</title><!--[if (mso 16)]>
+       <body>
+  Your Appointment is created on ${date}, ${time} in ${hospital}.
+  Appointment details: Patient name: ${name} <br> Date: ${date} <br>Hospital: ${hospital} <br> Doctor: ${dr}
+  Our receptionist will call you shortly to verify and confirm your appointment.
+  Please wait for confirmation mail.
+     </body>
+    </html>`,
+  });
+};
+
+
+export {sendWelcomeMail, sendAppointmentConfirmation}
 export default sendMail;
