@@ -1,6 +1,6 @@
 import {Appointment} from "../models/appointment.model.js";
 
-import { sendAppointmentConfirmation } from "../utils/nodemailer.util.js"; 
+import { sendAppointmentNotif } from "../utils/nodemailer.util.js"; 
 import cron from "node-cron";
 const bookAppointment = async (req, res) => {
   try {
@@ -23,7 +23,7 @@ const bookAppointment = async (req, res) => {
     });
 
     await newAppointment.save();
-    await sendAppointmentConfirmation(userContact.email, userContact.name, hospital,doctor, appointmentDate, appointmentTime)
+    await sendAppointmentNotif(userContact.email, userContact.name, hospital,doctor, appointmentDate, appointmentTime)
     return res.json({
       success: true,
       message: "Appointment booked successfully.",

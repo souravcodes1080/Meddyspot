@@ -491,7 +491,41 @@ const sendWelcomeMail = async (email, username) => {
     </html>`,
   });
 };
-const sendAppointmentConfirmation = async (email, name, hospital, dr, date, time) => {
+const sendOrderNotif = async (email, name, address, phno) => {
+  const transporter = nodemailer.createTransport({
+    host: process.env.SMTP_HOST,
+    port: process.env.SMTP_PORT,
+    secure: false,
+    auth: {
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASSWORD,
+    },
+  });
+
+  await transporter.sendMail({
+    from: process.env.SMTP_USER,
+    to: email,
+    subject: "Your order has been placed",
+    text: `Greetings ${name}. Order has been placed from Med&Care. `,
+    html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    <html dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office" lang="en">
+     <head>
+      <meta charset="UTF-8">
+      <meta content="width=device-width, initial-scale=1" name="viewport">
+      <meta name="x-apple-disable-message-reformatting">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta content="telephone=no" name="format-detection">
+      <title>New Template</title><!--[if (mso 16)]>
+       <body>
+  Your order is placedon  ${Date.now()}.
+  Order details:  name: ${name} <br> address: ${address} <br>phone number: ${phno} <br> 
+  Our executive will call you shortly to verify and confirm your order.
+  Please wait for confirmation mail.
+     </body>
+    </html>`,
+  });
+};
+const sendAppointmentNotif = async (email, name, hospital, dr, date, time) => {
   const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST,
     port: process.env.SMTP_PORT,
@@ -527,5 +561,5 @@ const sendAppointmentConfirmation = async (email, name, hospital, dr, date, time
 };
 
 
-export {sendWelcomeMail, sendAppointmentConfirmation}
+export {sendWelcomeMail, sendAppointmentNotif, sendOrderNotif}
 export default sendMail;
