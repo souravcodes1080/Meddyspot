@@ -21,7 +21,7 @@ const bookAppointment = async (req, res) => {
       appointmentTime,
       userContact,
     });
-
+    console.log(appointmentDate, appointmentTime)
     await newAppointment.save();
     await sendAppointmentNotif(userContact.email, userContact.name, hospital,doctor, appointmentDate, appointmentTime)
     return res.json({
