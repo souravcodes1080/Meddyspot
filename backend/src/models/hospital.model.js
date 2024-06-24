@@ -47,6 +47,10 @@ const hospitalSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    city:{
+      type:String,
+      required: true,
+    },
     state: {
       type: String,
       required: true,
@@ -72,10 +76,21 @@ const hospitalSchema = new mongoose.Schema(
       type: Number,
       default: 0.0,
     },
+    location: {
+      type: {
+        type: String,
+        enum: ['Point'], // 'Point' is the type for GeoJSON points
+        required: true,
+      },
+      coordinates: {
+        type: [Number],
+        required: true,
+      },
+    },
   },
   { timestamps: true }
 );
-
+hospitalSchema.index({ location: '2dsphere' });
 const Hospital = new mongoose.model("Hospital", hospitalSchema);
 
 export { Hospital };

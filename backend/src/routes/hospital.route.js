@@ -1,11 +1,19 @@
-import express from "express"
+import express from "express";
 import upload from "../utils/multer.util.js";
-import { addHospital } from '../controllers/hospital.controller.js';
+import {
+  addHospital,
+  getAllHospital,
+  hospitalById,
+  nearbyHospitals,
+  searchHospitals,
+} from "../controllers/hospital.controller.js";
 
 const hospitalRouter = express.Router();
 
-hospitalRouter.post("/add", upload.array('image',20), addHospital)
+hospitalRouter.get("/", getAllHospital);
+hospitalRouter.post("/add", upload.array("image", 20), addHospital);
+hospitalRouter.get("/getbyId/:id", hospitalById);
+hospitalRouter.get("/search", searchHospitals);
+hospitalRouter.get("/nearby", nearbyHospitals);
 
-
-
-export{ hospitalRouter}
+export { hospitalRouter };
