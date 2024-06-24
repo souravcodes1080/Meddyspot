@@ -517,7 +517,7 @@ const sendOrderNotif = async (email, name, address, phno) => {
       <meta content="telephone=no" name="format-detection">
       <title>New Template</title><!--[if (mso 16)]>
        <body>
-  Your order is placedon  ${Date.now()}.
+  Your order is placed on  ${Date.now()}.
   Order details:  name: ${name} <br> address: ${address} <br>phone number: ${phno} <br> 
   Our executive will call you shortly to verify and confirm your order.
   Please wait for confirmation mail.
