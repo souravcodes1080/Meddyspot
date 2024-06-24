@@ -88,7 +88,7 @@ const hospitalById = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const hospital = await Hospital.findById(id);
+    const hospital = await Hospital.findById(id).populate('doctor');
 
     if (!hospital) {
       return res.json({
