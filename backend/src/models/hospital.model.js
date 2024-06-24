@@ -20,8 +20,8 @@ const hospitalSchema = new mongoose.Schema(
       type: [String],
       required: true,
     },
-    specialized:{
-        type: [String],
+    specialized: {
+      type: [String],
     },
     facilities: {
       type: [String],
@@ -33,16 +33,16 @@ const hospitalSchema = new mongoose.Schema(
         ref: "Doctor",
       },
     ],
-    location: {
-      lat: {
-        type: Number,
-        required: true,
-      },
-      long: {
-        type: Number,
-        required: true,
-      },
+
+    lat: {
+      type: Number,
+      required: true,
     },
+    long: {
+      type: Number,
+      required: true,
+    },
+
     address: {
       type: String,
       required: true,

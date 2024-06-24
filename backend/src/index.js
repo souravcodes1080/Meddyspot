@@ -22,6 +22,7 @@ app.get("/", (req, res) => {
 //api endpoints
 app.use("/api/user", userRouter);
 app.use("/api/hospital", hospitalRouter)
+app.use("/uploads", express.static("uploads"));
 
 
 app.listen(process.env.PORT, () => {

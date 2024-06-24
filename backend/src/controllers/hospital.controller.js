@@ -6,12 +6,12 @@ const addHospital = async (req, res) => {
         name,
         email,
         phoneNumber,
-        image,
         type,
         specialized,
         facilities,
         doctor,
-        location,
+        lat,
+        long,
         address,
         state,
         pincode,
@@ -20,8 +20,9 @@ const addHospital = async (req, res) => {
         review,
         rating,
       } = req.body;
-  
-      // Create a new hospital instance
+
+      const image = req.files ? req.files.map(file => file.path) : [];
+      
       const newHospital = new Hospital({
         name,
         email,
@@ -31,7 +32,8 @@ const addHospital = async (req, res) => {
         specialized,
         facilities,
         doctor,
-        location,
+        lat,
+        long,
         address,
         state,
         pincode,
