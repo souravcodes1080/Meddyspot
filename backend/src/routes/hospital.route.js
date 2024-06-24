@@ -6,6 +6,7 @@ import {
   hospitalById,
   nearbyHospitals,
   searchHospitals,
+  updateHospital,
 } from "../controllers/hospital.controller.js";
 
 const hospitalRouter = express.Router();
@@ -15,5 +16,6 @@ hospitalRouter.post("/add", upload.array("image", 20), addHospital);
 hospitalRouter.get("/getbyId/:id", hospitalById);
 hospitalRouter.get("/search", searchHospitals);
 hospitalRouter.get("/nearby", nearbyHospitals);
+hospitalRouter.post("/update/:id", updateHospital);
 
 export { hospitalRouter };

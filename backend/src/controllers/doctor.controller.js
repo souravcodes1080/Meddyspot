@@ -36,4 +36,46 @@ const addDoctor = async (req, res) => {
     }
   };
 
-export { addDoctor };
+
+const updateDoctor = async (req, res) => {
+  try {
+      const { id } = req.params;
+      const { name, email, specialized } = req.body;
+      
+      // Check if there's a new profile picture uploaded
+      const profilePic = req.file ? req.file.path : undefined;
+
+      // Find the doctor by ID
+      let doctor = await Doctor.findById(id);
+
+      if (!doctor) {
+          return res.status(404).json({
+              success: false,
+              message: "Doctor not found.",
+          });
+      }
+
+      // Update fields if provided
+      if (name) doctor.name = name;
+      if (email) doctor.email = email;
+      if (specialized) doctor.specialized = specialized;
+      if (profilePic) doctor.profilePic = profilePic;
+
+      // Save updated doctor to the database
+      await doctor.save();
+
+      return res.json({
+          success: true,
+          message: "Doctor updated successfully.",
+          doctor,
+      });
+  } catch (err) {
+      console.error(err);
+      return res.status(500).json({
+          success: false,
+          message: "Error while updating doctor.",
+      });
+  }
+};
+
+export { addDoctor, updateDoctor };

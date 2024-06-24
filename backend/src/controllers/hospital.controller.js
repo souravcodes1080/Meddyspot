@@ -24,6 +24,7 @@ const addHospital = async (req, res) => {
       email,
       phoneNumber,
       type,
+      desc,
       specialized,
       facilities,
       doctor,
@@ -49,6 +50,7 @@ const addHospital = async (req, res) => {
       email,
       phoneNumber,
       image,
+      desc,
       type,
       specialized,
       facilities,
@@ -165,4 +167,91 @@ const nearbyHospitals = async (req, res) => {
   }
 };
 
-export { getAllHospital, addHospital, hospitalById, searchHospitals, nearbyHospitals };
+
+const updateHospital = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const {
+      name,
+      email,
+      phoneNumber,
+      type,
+      desc,
+      specialized,
+      facilities,
+      doctor,
+      lat,
+      long,
+      address,
+      city,
+      state,
+      pincode,
+      gmapLink,
+      website,
+      rating,
+    } = req.body;
+
+    // Parse latitude and longitude as floats
+    const latitude = parseFloat(lat) || 0;
+    const longitude = parseFloat(long) || 0;
+    if (isNaN(latitude) || isNaN(longitude)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid latitude or longitude values.",
+      });
+    }
+
+    // Handle image updates
+    // const newImages = req.files ? req.files.map((file) => file.path) : [];
+    
+    // Find the hospital by ID
+    const hospital = await Hospital.findById(id);
+
+    if (!hospital) {
+      return res.status(404).json({
+        success: false,
+        message: "Hospital not found.",
+      });
+    }
+
+    // Update the hospital fields
+    hospital.name = name || hospital.name;
+    hospital.email = email || hospital.email;
+    hospital.phoneNumber = phoneNumber || hospital.phoneNumber;
+    hospital.type = type || hospital.type;
+    hospital.desc = desc || hospital.desc;
+    hospital.specialized = specialized || hospital.specialized;
+    hospital.facilities = facilities || hospital.facilities;
+    hospital.doctor = doctor || hospital.doctor;
+    hospital.lat = latitude || hospital.lat;
+    hospital.long = longitude || hospital.long;
+    hospital.address = address || hospital.address;
+    hospital.city = city || hospital.city;
+    hospital.state = state || hospital.state;
+    hospital.pincode = pincode || hospital.pincode;
+    hospital.gmapLink = gmapLink || hospital.gmapLink;
+    hospital.website = website || hospital.website;
+    hospital.rating = rating || hospital.rating;
+    // hospital.image = [...hospital.image, ...newImages];
+    hospital.location = {
+      type: "Point",
+      coordinates: [longitude, latitude],
+    };
+
+    // Save the updated hospital
+    await hospital.save();
+
+    return res.json({
+      success: true,
+      message: "Hospital updated successfully.",
+      hospital,
+    });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({
+      success: false,
+      message: "Error while updating hospital.",
+    });
+  }
+};
+export { getAllHospital, addHospital, hospitalById, searchHospitals, nearbyHospitals, updateHospital };

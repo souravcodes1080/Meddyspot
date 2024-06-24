@@ -142,4 +142,67 @@ const searchPharmacy = async (req, res) => {
       });
     }
   };
-export { addPharmacy, pharmacyById, searchPharmacy, nearbyPharmacy };
+
+
+const updatePharmacy = async (req, res) => {
+  try {
+      const { id } = req.params;
+      const {
+          name,
+          email,
+          phoneNumber,
+          address,
+          city,
+          state,
+          pincode,
+          gmapLink,
+          website,
+          rating,
+      } = req.body;
+      
+      // Check if there are new store pictures uploaded
+      const storePic = req.files ? req.files.map((file) => file.path) : undefined;
+
+      // Find the pharmacy by ID
+      let pharmacy = await Pharmacy.findById(id);
+
+      if (!pharmacy) {
+          return res.status(404).json({
+              success: false,
+              message: "Pharmacy not found.",
+          });
+      }
+
+      // Update fields if provided
+      if (name) pharmacy.name = name;
+      if (email) pharmacy.email = email;
+      if (phoneNumber) pharmacy.phoneNumber = phoneNumber;
+      if (address) pharmacy.address = address;
+      if (city) pharmacy.city = city;
+      if (state) pharmacy.state = state;
+      if (pincode) pharmacy.pincode = pincode;
+      if (gmapLink) pharmacy.gmapLink = gmapLink;
+      if (website) pharmacy.website = website;
+      if (rating) pharmacy.rating = rating;
+      if (storePic) {
+          pharmacy.storePic = pharmacy.storePic.concat(storePic);
+      }
+
+      // Save updated pharmacy to the database
+      await pharmacy.save();
+
+      return res.json({
+          success: true,
+          message: "Pharmacy updated successfully.",
+          pharmacy,
+      });
+  } catch (err) {
+      console.error(err);
+      return res.status(500).json({
+          success: false,
+          message: "Error while updating pharmacy.",
+      });
+  }
+};
+
+export { addPharmacy, pharmacyById, searchPharmacy, nearbyPharmacy, updatePharmacy };
