@@ -54,7 +54,6 @@ const register = async (req, res) => {
 };
 const verifyEmail = async (req, res) => {
   try {
-    //TODO: we can take email from header instead of body!
     const { email, otp } = req.body;
     const existingUser = await User.findOne({ email });
     if (!existingUser) {

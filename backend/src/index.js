@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 
 import { connectdb } from "./db/index.js";
 import { userRouter } from "./routes/user.route.js";
+import { hospitalRouter } from "./routes/hospital.route.js";
 
 //middlewares
 const app = express();
@@ -20,7 +21,7 @@ app.get("/", (req, res) => {
 
 //api endpoints
 app.use("/api/user", userRouter);
-
+app.use("/api/hospital", hospitalRouter)
 
 
 app.listen(process.env.PORT, () => {
