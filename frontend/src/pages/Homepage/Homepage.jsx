@@ -36,6 +36,7 @@ function Homepage() {
   };
   return (
     <>
+    <div className="hero-wrapper">
       <section className="hero">
         <div className="hero-content">
           <h1>MED & CARE</h1>
@@ -59,6 +60,8 @@ function Homepage() {
           </div>
         </form>
       </section>
+    </div>
+      
       <br />
       <br />
       <br />
