@@ -36,15 +36,14 @@ const register = async (req, res) => {
       upperCaseAlphabets: false,
       specialChars: false,
     });
-
     const newUser = await User.create({
       name,
       gender,
       age,
       email,
       phoneNumber,
-      lat,
-      long,
+      "location.lat": lat || 22.569859,
+      "location.long": long || 88.364241,
       password: hashedPassword,
       otp: otp,
     });
@@ -117,7 +116,7 @@ const resendOtp = async (req, res) => {
 };
 const login = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, lat, long } = req.body;
     const existingUser = await User.findOne({ email });
     if (!existingUser) {
       return res.json({ success: false, message: "No user found." });
@@ -133,6 +132,7 @@ const login = async (req, res) => {
       //     { expiresIn: 3600 }
       //   );
       const token = genToken(existingUser._id, 8760);
+
       return res.json({
         success: true,
         message: "Login sucessful.",
