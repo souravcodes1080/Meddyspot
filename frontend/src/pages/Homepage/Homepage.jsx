@@ -40,8 +40,7 @@ function Homepage() {
         <div className="hero-content">
           <h1>MED & CARE</h1>
           <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Porro,
-            sapiente!
+           Transforming health through innovation
           </p>
         </div>
         <form action="" className="hero-search">
