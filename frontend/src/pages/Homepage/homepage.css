@@ -3,7 +3,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 55vh;
+  height: 60vh;
   width: 100%;
   /* background-image: url("https://static.vecteezy.com/system/resources/thumbnails/026/365/937/small_2x/beautiful-blurred-green-nature-background-ai-generated-photo.jpg");
   background-position: center;
@@ -21,8 +21,9 @@ background-size: cover;
 
 .hero-content h1 {
   color: white;
-  font-size: 50px;
+  font-size: 70px;
   margin-bottom: 0;
+  font-family: "Playfair Display", serif;
 }
 .hero-content p {
   color: white;

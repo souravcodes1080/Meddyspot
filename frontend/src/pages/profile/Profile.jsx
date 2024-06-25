@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 // import "./signin.css";
+import "./profile.css";
 import logo from "../../../public/assets/logo.png";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -7,54 +8,82 @@ import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 function Profile() {
   const navigate = useNavigate();
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phoneNumber, setPhonenumber] = useState("");
-  const [password, setPassword] = useState("");
-  const [terms, setTerms] = useState(false);
+  const [cookies, setCookie] = useCookies(["token", "name", "email", "phoneNumber"]);
+  const [name, setName] = useState(cookies["name"]);
+  const [email, setEmail] = useState(cookies["email"]);
+  const [phoneNumber, setPhonenumber] = useState(cookies["phoneNumber"]);
+  const [age, setAge] = useState("");
+  const [gender, setGender] = useState("");
+  const [height, setHeight] = useState("");
+  const [weight, setWeight] = useState("");
+  const [bloodGroup, setBloodGroup] = useState("");
+  const [address, setAddress] = useState("");
+
   const [loading, setLoading] = useState(false);
-  const [cookies, setCookie] = useCookies(["token", "name", "email"])
- 
-  const signup = async (e) => {
+  useEffect(() => {
+    if (!cookies["token"]) {
+      navigate("/");
+    }
+    fetchUserDetails()
+  }, []);
+  const fetchUserDetails = async () =>{
+    try {
+        const response = await axios.get(`http://localhost:8080/api/user/${cookies["email"]}`);
+        setName(response.data.user.name)
+        setPhonenumber(response.data.user.phoneNumber)
+        setAge(response.data.user.age)
+        setGender(response.data.user.gender)
+        setHeight(response.data.user.biodata.height)
+        setWeight(response.data.user.biodata.weight)
+        setBloodGroup(response.data.user.biodata.bloodGroup || "")
+        setAddress(response.data.user.address)
+        if (response.data.success) {
+            setCookie("name", response.data.user.name);
+        setCookie("phoneNumber", response.data.user.phoneNumber);
+            setLoading(false);
+          } else {
+            toast.error(response.data.message || "Fetching failed");
+            setLoading(false);
+          }
+
+    } catch (error) {
+        toast.error("An error occurred while fetching user details");
+        console.log(error);
+        setLoading(false);
+    }
+  }
+  const update = async (e) => {
     e.preventDefault();
-    if (!name || !email || !phoneNumber || !password) {
-      toast.error("All fields are required!");
-      return;
-    }
-    if (!terms) {
-      toast.error("You must agree to the terms and conditions");
-      return;
-    }
 
     try {
       setLoading(true);
       const response = await axios.post(
-        "http://localhost:8080/api/user/register",
+        "http://localhost:8080/api/user/update",
         {
           name,
           email,
           phoneNumber,
-          password,
+          age,
+          gender,
+          height,
+          weight,
+          bloodGroup,
+          address,
         }
       );
 
       if (response.data.success) {
-        toast.success("Signup successful!");
-
-        setName("");
-        setEmail("");
-        setPhonenumber("");
-        setPassword("");
-        setTerms(false);
-        navigate(`/verify/${email}`);
+        toast.success("Profile Updated!"); 
+        
+        await fetchUserDetails() 
         setLoading(false);
       } else {
-        toast.error(response.data.message || "Signup failed");
+        toast.error(response.data.message || "Update failed");
         setLoading(false);
       }
     } catch (error) {
-      toast.error("An error occurred during signup");
-      console.log(error)
+      toast.error("An error occurred during update");
+      console.log(error);
       setLoading(false);
     }
   };
@@ -65,42 +94,109 @@ function Profile() {
           <div className="logo">
             <img src={logo} alt="" width={"80px"} /> <p>Your Profile</p>
           </div>
-          <form className="signup-form" onSubmit={signup}>
-            <input
-              type="text"
-              placeholder="Name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <input
-              type="number"
-              placeholder="Phone Number"
-              value={phoneNumber}
-              onChange={(e) => setPhonenumber(e.target.value)}
-            />
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+          <form className="signup-form profile-form" onSubmit={update}>
+            <div className="name">
+              <lable>Name</lable>
+              <input
+                type="text"
+                placeholder="Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </div>
+            <div className="name">
+              <label>Email</label>{" "}
+              <input
+                disabled
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            <div className="name">
+              <label>Phone number</label>
+              <input
+                type="number"
+                placeholder="Phone Number"
+                value={phoneNumber}
+                onChange={(e) => setPhonenumber(e.target.value)}
+              />
+            </div>
 
-            <button type="submit">{loading ? <>Signing in...</>: <>Sign up</>}</button>
+            <div className="small-label">
+              <div className="name">
+                <label>Age:</label>
+                <input
+                style={{"marginLeft":"14px", "paddingRight": "25px"}}
+                className="age"
+                  type="number"
+                  value={age}
+                  onChange={(e) => setAge(e.target.value)}
+                  placeholder="Age"
+                />
+              </div>
+              <div className="name">
+                <label>Gender</label>
+                <input
+                className="age"
+                  type="text"
+                  value={gender}
+                  onChange={(e) => setGender(e.target.value)}
+                  placeholder="Gender"
+                />
+              </div>
+            </div>
+
+            <div className="small-label">
+              <div className="name">
+                <label>Height:</label>
+                <input
+                className="age"
+                  type="number"
+                  value={height}
+                  onChange={(e) => setHeight(e.target.value)}
+                  placeholder="Height"
+                />
+              </div>
+              <div className="name">
+                <label>Weight</label>
+                <input
+                className="age"
+                  type="number"
+                  value={weight}
+                  onChange={(e) => setWeight(e.target.value)}
+                  placeholder="Weight"
+                />
+              </div>
+            </div>
+
+            <div className="name">
+              <label>Blood Group</label>
+              <input
+                type="text"
+                value={bloodGroup}
+                onChange={(e) => setBloodGroup(e.target.value)}
+                placeholder="Blood Group"
+              />
+            </div>
+            <div className="name">
+              <label>Address:</label>
+              <textarea
+                rows={"5"}
+                type="text"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                placeholder="Address"
+              />
+            </div>
+            <div className="profile-button">
+              <button type="submit">
+                {loading ? <>Updating...</> : <>Update</>}
+              </button>
+              <button>Logout</button>
+            </div>
           </form>{" "}
-          <div className="terms">
-            <input
-              type="checkbox"
-              checked={terms}
-              onChange={(e) => setTerms(e.target.checked)}
-            />
-            <label>Agree to Terms & Conditions</label>
-          </div>
         </div>
       </div>
     </>

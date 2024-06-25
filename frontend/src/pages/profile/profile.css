@@ -1,0 +1,34 @@
+
+.name{
+    display: flex;
+    align-items: center;
+    gap:20px;
+    justify-content: space-between;
+}
+.name label{
+    width: 30%;
+}
+.name input{
+    width: 60%;
+}
+.age{
+    width: 20% !important;
+}
+
+.small-label{
+    display: flex;
+    gap: 20px;
+    flex: 1;
+    justify-content: space-between;
+}
+.small-label label{
+    flex:1
+}
+.small-label input{
+    flex: 0.5;
+}
+textarea{
+    width: 60%;
+    resize: none;
+    font-size: 16px;
+}

@@ -4,10 +4,21 @@ import sendMail, { sendWelcomeMail } from "../utils/nodemailer.util.js";
 import otpGenerator from "otp-generator";
 import { genToken, verifyToken } from "../utils/jwt.util.js";
 
-
 const register = async (req, res) => {
   try {
-    const { name, gender, age, email, phoneNumber, password, lat, long, height, weight, bloodGroup } = req.body;
+    const {
+      name,
+      gender,
+      age,
+      email,
+      phoneNumber,
+      password,
+      lat,
+      long,
+      height,
+      weight,
+      bloodGroup,
+    } = req.body;
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.json({ success: false, message: "Email already exists." });
@@ -143,6 +154,68 @@ const login = async (req, res) => {
   }
 };
 
+const updateUser = async (req, res) => {
+  try {
+    const {
+      name,
+      email,
+      phoneNumber,
+      age,
+      gender,
+      height,
+      weight,
+      bloodGroup,
+      address,
+    } = req.body;
+
+    const updatedUser = await User.findOneAndUpdate(
+      { email: email },
+      {
+        name,
+        email,
+        phoneNumber,
+        age,
+        gender,
+        "biodata.height": height,
+        "biodata.weight": weight,
+        "biodata.bloodGroup": bloodGroup,
+        address,
+      },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.json({ success: false, message: "User not found." });
+    }
+
+    return res.json({
+      success: true,
+      message: "User updated successfully.",
+      updatedUser,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.json({ success: false, message: "Error while updating user." });
+  }
+};
+const getUser = async (req, res) => {
+  try {
+    const { email } = req.params;
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.json({ success: false, message: "User not found." });
+    }
+
+    return res.json({
+      success: true,
+      message: "User found successfully.",
+      user,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.json({ success: false, message: "Error while fetching user." });
+  }
+};
 const getAllUsers = async (req, res) => {
   //   try {
   //     const token = req.header("x-auth-token");
@@ -165,4 +238,12 @@ const getAllUsers = async (req, res) => {
   //   }
 };
 
-export { register, verifyEmail, resendOtp, login, getAllUsers };
+export {
+  register,
+  verifyEmail,
+  resendOtp,
+  login,
+  getAllUsers,
+  updateUser,
+  getUser,
+};

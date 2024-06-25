@@ -13,10 +13,31 @@ function Signin() {
   const [password, setPassword] = useState("");
   const [terms, setTerms] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [cookies, setCookie] = useCookies(["token", "name", "email"])
+  const [location, setLocation] = useState({ lat: null, long: null });
+  const [cookies, setCookie] = useCookies(["token", "name", "email", "lat", "long"])
   useEffect(() => {
     if (cookies["token"]) {
       navigate("/");
+    }
+  }, []);
+
+
+  useEffect(() => {
+    // Get user location
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setLocation({
+            lat: position.coords.latitude,
+            long: position.coords.longitude,
+          });
+        },
+        (error) => {
+          console.error("Error getting location", error);
+        }
+      );
+    } else {
+      console.error("Geolocation is not supported by the browser.");
     }
   }, []);
   const signup = async (e) => {
@@ -39,6 +60,8 @@ function Signin() {
           email,
           phoneNumber,
           password,
+          lat: location.lat, // Include latitude
+          long: location.long, // Include longitude
         }
       );
 
