@@ -9,11 +9,11 @@ const userSchema = new mongoose.Schema(
     gender: {
       type: String,
       enum: ["male", "female", "other"],
-      required: [true, "Name is required."],
+      // required: [true, "Name is required."],
     },
     age: {
       type: Number,
-      required: [true, "Age is required."],
+      // required: [true, "Age is required."],
     },
     email: {
       type: String,
