@@ -5,8 +5,6 @@ const register = "http://localhost:8080/api/user/register";
 const verify = "http://localhost:8080/api/user/verify";
 const resend = "http://localhost:8080/api/user/resend";
 const login = "http://localhost:8080/api/user/login";
-const updateUser = "http://localhost:8080/api/user/update";
-const getUser = "http://localhost:8080/api/user/:email";
 
 const user = {
   name: "John Doe",
@@ -102,18 +100,3 @@ const appointment = {
     address: "123 Main St, City, Country",
   },
 };
-
-
-//place order
-const placeOrder = "http://localhost:8080/api/order/book";
-const getOrder = "http://localhost:8080/api/order/"
-const updateOrderStatus = "http://localhost:8080/api/order/update/:id";
-const order = {
-  "userId": "66785033d356960cc1f31044",
-  "pharmacyId": "66791d686c82436c2b7c941b",
-  "customDetails": "good",
-  "name": "Sourav",
-  "email": "souravch2003@gmail.com",
-  "phoneNumber": 1234567890,
-  "address": "123 Main St, City, Country"
-}
