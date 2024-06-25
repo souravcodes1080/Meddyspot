@@ -10,7 +10,6 @@ const createOrder = async (req, res) => {
     const { userId, pharmacyId, customDetails, name, email, phoneNumber, address } = req.body;
     const prescription = req.files ? req.files.map((file) => file.path) : []; 
 
-    console.log(pharmacyId, userId)
 
     const newOrder = new Order({
       user: userId,

@@ -54,7 +54,7 @@ const addHospital = async (req, res) => {
       type,
       specialized,
       facilities,
-      doctor,
+      doctor:null,
       lat,
       long,
       address,

@@ -404,7 +404,7 @@ const sendOrderNotif = async (email, name, address, phno) => {
       <meta content="telephone=no" name="format-detection">
       <title>New Template</title><!--[if (mso 16)]>
        <body>
-  Your order is placedon  ${Date.now()}.
+  Your order is placed on  ${Date()}.
   Order details:  name: ${name} <br> address: ${address} <br>phone number: ${phno} <br> 
   Our executive will call you shortly to verify and confirm your order.
   Please wait for confirmation mail.
@@ -412,6 +412,12 @@ const sendOrderNotif = async (email, name, address, phno) => {
     </html>`,
   });
 };
+const formatDate = (timestamp) => {
+  const date = new Date(timestamp);
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  return date.toLocaleDateString(undefined, options);
+};
+
 const sendAppointmentNotif = async (email, name, hospital, dr, date, time) => {
   const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST,
