@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema(
       required: [true, "Phone number is required."],
     },
     address:{
-      type: String
+      type:String
     },
     password: {
       type: String,
@@ -46,11 +46,11 @@ const userSchema = new mongoose.Schema(
     biodata: {
       height: {
         type: Number,
-        default: 180,
+        // default: 180,
       },
       weight: {
         type: Number,
-        default: 70,
+        // default: 70,
       },
       bloodGroup: {
         type: String,

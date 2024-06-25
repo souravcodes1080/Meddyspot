@@ -20,6 +20,20 @@ function Login() {
       navigate("/");
     }
   }, []);
+
+  const requestLocation = () => {
+    return new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          resolve({ latitude, longitude });
+        },
+        (error) => {
+          reject(error);
+        }
+      );
+    });
+  };
   const signup = async (e) => {
     e.preventDefault();
     if (!email || !password) {

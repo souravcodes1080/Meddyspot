@@ -31,4 +31,20 @@ textarea{
     width: 60%;
     resize: none;
     font-size: 16px;
+    outline: none;
+    border: 1px solid rgba(0, 0, 0, 0.238);
+    border-radius: 6px;
+    padding: 10px 20px;
+}
+.profile-button{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+.update{
+    width: 80px !important;
+}
+.logout{
+    width: 80px;
+    background-color: rgb(146, 0, 0) !important;
 }

@@ -14,13 +14,18 @@ function Signin() {
   const [terms, setTerms] = useState(false);
   const [loading, setLoading] = useState(false);
   const [location, setLocation] = useState({ lat: null, long: null });
-  const [cookies, setCookie] = useCookies(["token", "name", "email", "lat", "long"])
+  const [cookies, setCookie] = useCookies([
+    "token",
+    "name",
+    "email",
+    "lat",
+    "long",
+  ]);
   useEffect(() => {
     if (cookies["token"]) {
       navigate("/");
     }
   }, []);
-
 
   useEffect(() => {
     // Get user location
@@ -31,6 +36,7 @@ function Signin() {
             lat: position.coords.latitude,
             long: position.coords.longitude,
           });
+          console.log(location.lat)
         },
         (error) => {
           console.error("Error getting location", error);
@@ -39,7 +45,7 @@ function Signin() {
     } else {
       console.error("Geolocation is not supported by the browser.");
     }
-  }, []);
+  }, [email]);
   const signup = async (e) => {
     e.preventDefault();
     if (!name || !email || !phoneNumber || !password) {
@@ -81,7 +87,7 @@ function Signin() {
       }
     } catch (error) {
       toast.error("An error occurred during signup");
-      console.log(error)
+      console.log(error);
       setLoading(false);
     }
   };
@@ -118,7 +124,9 @@ function Signin() {
               onChange={(e) => setPassword(e.target.value)}
             />
 
-            <button type="submit">{loading ? <>Signing in...</>: <>Sign up</>}</button>
+            <button type="submit">
+              {loading ? <>Signing in...</> : <>Sign up</>}
+            </button>
           </form>{" "}
           <div className="terms">
             <input
