@@ -98,6 +98,7 @@ function Signin() {
           <div className="logo">
             <img src={logo} alt="" width={"80px"} /> <p>Sign Up</p>
           </div>
+          {/* <p>Create accout with your email today for free!</p> */}
           <form className="signup-form" onSubmit={signup}>
             <input
               type="text"

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./homepage.css";
-import herp from "../../../public/assets/hero.png";
 import location from "../../../public/assets/location.png";
 import search from "../../../public/assets/search.png";
 import Hospital from "../../../public/assets/Hospital.png";
@@ -71,10 +70,7 @@ function Homepage() {
               <img src={Hospital} alt="" width={"100%"} />
               <p>Hospital</p>
             </li>
-            <li>
-              <img src={Nursinghome} alt="" width={"100%"} />
-              <p>Nursing Homes</p>
-            </li>
+
             <li>
               <img src={Clinic} alt="" width={"100%"} />
               <p>Clinics</p>
@@ -82,6 +78,10 @@ function Homepage() {
             <li>
               <img src={Pharmacy} alt="" width={"100%"} />
               <p>Pharmacies</p>
+            </li>
+            <li>
+              <img src={Nursinghome} alt="" width={"100%"} />
+              <p>Nursing Homes</p>
             </li>
           </ul>
         </div>
@@ -96,16 +96,16 @@ function Homepage() {
 
       <div className="container">
         <div className="hospital-list">
-        {loading ? (
-          <p>Loading...</p>
-        ) : nearbyHospital.length > 0 ? (
-          nearbyHospital.map((hospital) => (
+          {loading ? (
+            <p>Loading...</p>
+          ) : nearbyHospital.length > 0 ? (
+            nearbyHospital.map((hospital) => (
               <Card key={hospital._id} hospital={hospital} />
             ))
           ) : (
             <p>No hospitals found near your location.</p>
           )}
-          </div>
+        </div>
       </div>
     </>
   );

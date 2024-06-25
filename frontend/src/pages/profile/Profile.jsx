@@ -110,6 +110,7 @@ function Profile() {
           <div className="logo">
             <img src={logo} alt="" width={"80px"} /> <p>Your Profile</p>
           </div>
+          {/* <p>Edit your details here.</p> */}
           <form className="signup-form profile-form" onSubmit={update}>
             <div className="name">
               <lable>Name</lable>

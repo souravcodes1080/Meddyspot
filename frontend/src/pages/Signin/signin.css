@@ -70,3 +70,21 @@
     color: #275489;
     cursor: pointer;
 }
+
+
+@media (max-width: 1200px) {
+}
+@media (max-width: 800px) {
+  
+}
+@media (max-width: 500px) {
+ .logo img{
+    display: none;
+ }
+ .signup-wrapper{
+    background-color: white;
+ }
+ .signup-container{
+    box-shadow: none;
+ }
+}

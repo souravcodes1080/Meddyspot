@@ -50,7 +50,7 @@ body {
 
 
 ::-webkit-scrollbar {
-  width: 5px;
+  width: 1px;
 }
 
 /* Track */
@@ -60,7 +60,7 @@ body {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #313131;
+  background: #31313100;
   border-radius: 100px;
 }
 
