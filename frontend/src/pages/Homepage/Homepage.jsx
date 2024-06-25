@@ -1,32 +1,39 @@
 import React, { useEffect, useState } from "react";
 import "./homepage.css";
+import herp from "../../../public/assets/hero.png";
 import location from "../../../public/assets/location.png";
 import search from "../../../public/assets/search.png";
-import hero from "../../../public/assets/hero.png";
+import Hospital from "../../../public/assets/Hospital.png";
+import Clinic from "../../../public/assets/Clinic.jpg";
+import Nursinghome from "../../../public/assets/Nursinghome.jpg";
+import Pharmacy from "../../../public/assets/Pharmacy.jpg";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
+import Card from "../../components/Card/Card";
 
 function Homepage() {
   const [cookies, setCookie] = useCookies(["token", "lat", "long"]);
   const [loading, setLoading] = useState(false);
   const [nearbyHospital, setNearybyHospital] = useState([]);
   useEffect(() => {
-    fetchHospital()
+    fetchHospital();
   }, []);
   const fetchHospital = async () => {
     setLoading(true);
     const response = await axios.get(
-      `http://localhost:8080/api/hospital/nearby?lat=${cookies["lat"]}&long=${cookies["long"]}`
+      `http://localhost:8080/api/hospital/nearby?lat=${
+        cookies["lat"] || 22.569859
+      }&long=${cookies["long"] || 88.364241}`
     );
     if (response.data.success) {
-      setLoading(false)
-      setNearybyHospital(response.data.hospitals)
-    }else{
-      setLoading(false)
-      toast.error("Something went wrong fetching hospital.")
+      setLoading(false);
+      console.log(nearbyHospital);
+      setNearybyHospital(response.data.hospitals);
+    } else {
+      setLoading(false);
+      toast.error("Something went wrong fetching hospital.");
     }
-
   };
   return (
     <>
@@ -61,19 +68,19 @@ function Homepage() {
         <div className="category">
           <ul>
             <li>
-              <img src={hero} alt="" width={"100%"} />
+              <img src={Hospital} alt="" width={"100%"} />
               <p>Hospital</p>
             </li>
             <li>
-              <img src={hero} alt="" width={"100%"} />
+              <img src={Nursinghome} alt="" width={"100%"} />
               <p>Nursing Homes</p>
             </li>
             <li>
-              <img src={hero} alt="" width={"100%"} />
+              <img src={Clinic} alt="" width={"100%"} />
               <p>Clinics</p>
             </li>
             <li>
-              <img src={hero} alt="" width={"100%"} />
+              <img src={Pharmacy} alt="" width={"100%"} />
               <p>Pharmacies</p>
             </li>
           </ul>
@@ -88,19 +95,17 @@ function Homepage() {
       </section>
 
       <div className="container">
+        <div className="hospital-list">
         {loading ? (
           <p>Loading...</p>
-        ) : (
-          nearbyHospital.length > 0 ? (
-            nearbyHospital.map((hospital) => (
-              <div key={hospital._id} className="hospital-item">
-                <p>{hospital.name}</p>
-              </div>
+        ) : nearbyHospital.length > 0 ? (
+          nearbyHospital.map((hospital) => (
+              <Card key={hospital._id} hospital={hospital} />
             ))
           ) : (
             <p>No hospitals found near your location.</p>
-          )
-        )}
+          )}
+          </div>
       </div>
     </>
   );

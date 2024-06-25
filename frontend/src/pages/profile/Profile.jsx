@@ -8,7 +8,12 @@ import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 function Profile() {
   const navigate = useNavigate();
-  const [cookies, setCookie] = useCookies(["token", "name", "email", "phoneNumber"]);
+  const [cookies, setCookie,removeCookie] = useCookies([
+    "token",
+    "name",
+    "email",
+    "phoneNumber",
+  ]);
   const [name, setName] = useState(cookies["name"]);
   const [email, setEmail] = useState(cookies["email"]);
   const [phoneNumber, setPhonenumber] = useState(cookies["phoneNumber"]);
@@ -24,34 +29,35 @@ function Profile() {
     if (!cookies["token"]) {
       navigate("/");
     }
-    fetchUserDetails()
+    fetchUserDetails();
   }, []);
-  const fetchUserDetails = async () =>{
+  const fetchUserDetails = async () => {
     try {
-        const response = await axios.get(`http://localhost:8080/api/user/${cookies["email"]}`);
-        setName(response.data.user.name)
-        setPhonenumber(response.data.user.phoneNumber)
-        setAge(response.data.user.age)
-        setGender(response.data.user.gender)
-        setHeight(response.data.user.biodata.height)
-        setWeight(response.data.user.biodata.weight)
-        setBloodGroup(response.data.user.biodata.bloodGroup || "")
-        setAddress(response.data.user.address)
-        if (response.data.success) {
-            setCookie("name", response.data.user.name);
+      const response = await axios.get(
+        `http://localhost:8080/api/user/${cookies["email"]}`
+      );
+      setName(response.data.user.name);
+      setPhonenumber(response.data.user.phoneNumber);
+      setAge(response.data.user.age);
+      setGender(response.data.user.gender);
+      setHeight(response.data.user.biodata.height);
+      setWeight(response.data.user.biodata.weight);
+      setBloodGroup(response.data.user.biodata.bloodGroup || "");
+      setAddress(response.data.user.address);
+      if (response.data.success) {
+        setCookie("name", response.data.user.name);
         setCookie("phoneNumber", response.data.user.phoneNumber);
-            setLoading(false);
-          } else {
-            toast.error(response.data.message || "Fetching failed");
-            setLoading(false);
-          }
-
-    } catch (error) {
-        toast.error("An error occurred while fetching user details");
-        console.log(error);
         setLoading(false);
+      } else {
+        toast.error(response.data.message || "Fetching failed");
+        setLoading(false);
+      }
+    } catch (error) {
+      // toast.error("An error occurred while fetching user details");
+      console.log(error);
+      setLoading(false);
     }
-  }
+  };
   const update = async (e) => {
     e.preventDefault();
 
@@ -73,9 +79,9 @@ function Profile() {
       );
 
       if (response.data.success) {
-        toast.success("Profile Updated!"); 
-        
-        await fetchUserDetails() 
+        toast.success("Profile Updated!");
+
+        await fetchUserDetails();
         setLoading(false);
       } else {
         toast.error(response.data.message || "Update failed");
@@ -87,6 +93,16 @@ function Profile() {
       setLoading(false);
     }
   };
+  const logout = async () =>{
+    //clear cookies
+    removeCookie("name")
+    removeCookie("phoneNumber")
+    removeCookie("email")
+    removeCookie("lat")
+    removeCookie("long")
+    removeCookie("token")
+    navigate("/")
+  }
   return (
     <>
       <div className="signup-wrapper">
@@ -123,63 +139,6 @@ function Profile() {
                 onChange={(e) => setPhonenumber(e.target.value)}
               />
             </div>
-
-            <div className="small-label">
-              <div className="name">
-                <label>Age:</label>
-                <input
-                style={{"marginLeft":"14px", "paddingRight": "25px"}}
-                className="age"
-                  type="number"
-                  value={age}
-                  onChange={(e) => setAge(e.target.value)}
-                  placeholder="Age"
-                />
-              </div>
-              <div className="name">
-                <label>Gender</label>
-                <input
-                className="age"
-                  type="text"
-                  value={gender}
-                  onChange={(e) => setGender(e.target.value)}
-                  placeholder="Gender"
-                />
-              </div>
-            </div>
-
-            <div className="small-label">
-              <div className="name">
-                <label>Height:</label>
-                <input
-                className="age"
-                  type="number"
-                  value={height}
-                  onChange={(e) => setHeight(e.target.value)}
-                  placeholder="Height"
-                />
-              </div>
-              <div className="name">
-                <label>Weight</label>
-                <input
-                className="age"
-                  type="number"
-                  value={weight}
-                  onChange={(e) => setWeight(e.target.value)}
-                  placeholder="Weight"
-                />
-              </div>
-            </div>
-
-            <div className="name">
-              <label>Blood Group</label>
-              <input
-                type="text"
-                value={bloodGroup}
-                onChange={(e) => setBloodGroup(e.target.value)}
-                placeholder="Blood Group"
-              />
-            </div>
             <div className="name">
               <label>Address:</label>
               <textarea
@@ -189,12 +148,66 @@ function Profile() {
                 onChange={(e) => setAddress(e.target.value)}
                 placeholder="Address"
               />
+            </div>{" "}
+            <div className="name">
+              <label>Blood Group</label>
+              <input
+                type="text"
+                value={bloodGroup}
+                onChange={(e) => setBloodGroup(e.target.value)}
+                placeholder="Blood Group"
+              />
+            </div>
+            <div className="small-label">
+              <div className="name">
+                <label>Age:</label>
+                <input
+                  style={{ marginLeft: "14px", paddingRight: "25px" }}
+                  className="age"
+                  type="number"
+                  value={age}
+                  onChange={(e) => setAge(e.target.value)}
+                  placeholder="Age"
+                />
+              </div>
+              <div className="name">
+                <label>Gender</label>
+                <input
+                  className="age"
+                  type="text"
+                  value={gender}
+                  onChange={(e) => setGender(e.target.value)}
+                  placeholder="Gender"
+                />
+              </div>
+            </div>
+            <div className="small-label">
+              <div className="name">
+                <label>Height:</label>
+                <input
+                  className="age"
+                  type="number"
+                  value={height}
+                  onChange={(e) => setHeight(e.target.value)}
+                  placeholder="Height"
+                />
+              </div>
+              <div className="name">
+                <label>Weight</label>
+                <input
+                  className="age"
+                  type="number"
+                  value={weight}
+                  onChange={(e) => setWeight(e.target.value)}
+                  placeholder="Weight"
+                />
+              </div>
             </div>
             <div className="profile-button">
-              <button type="submit">
+              <button type="submit" className="update">
                 {loading ? <>Updating...</> : <>Update</>}
               </button>
-              <button>Logout</button>
+              <button className="logout" onClick={logout}>Logout</button>
             </div>
           </form>{" "}
         </div>
