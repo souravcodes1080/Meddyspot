@@ -311,22 +311,178 @@ const sendOrderNotif = async (email, name, address, phno) => {
     to: email,
     subject: "Your order has been placed",
     text: `Greetings ${name}. Order has been placed from Med&Care. `,
-    html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-    <html dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office" lang="en">
-     <head>
-      <meta charset="UTF-8">
-      <meta content="width=device-width, initial-scale=1" name="viewport">
-      <meta name="x-apple-disable-message-reformatting">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta content="telephone=no" name="format-detection">
-      <title>New Template</title><!--[if (mso 16)]>
-       <body>
-  Your order is placed on  ${Date()}.
-  Order details:  name: ${name} <br> address: ${address} <br>phone number: ${phno} <br> 
-  Our executive will call you shortly to verify and confirm your order.
-  Please wait for confirmation mail.
-     </body>
-    </html>`,
+    html: `<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation - MED & CARE</title>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .email-container {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: auto;
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            animation: fadeIn 2s;
+        }
+
+        .email-header {
+            background: #dcdcdc; /* Light gray color */
+            color: #28791d;
+            padding: 10px;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .email-body {
+            padding: 20px;
+            background: #fff;
+            border-radius: 0 0 10px 10px;
+        }
+
+        .email-body p {
+            margin-bottom: 15px; /* Adding spacing between paragraphs */
+        }
+
+        .order-details {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .order-details table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .order-details th, .order-details td {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .order-description {
+            font-weight: bold;
+            margin-top: 20px;
+            padding: 10px;
+            color: #000;
+            border-radius: 5px;
+            display: inline-block;
+        }
+
+        .main-website-link {
+            margin-top: 20px;
+        }
+
+        .main-website-link a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #28791d; /* Green color */
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .main-website-link a:hover {
+            background-color: #1e5811; /* Darker shade of green on hover */
+        }
+
+        .email-footer {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #555;
+        }
+
+        .logo {
+            max-width: 100px;
+            margin: 10px auto;
+        }
+
+        .social-links {
+            margin: 20px 0;
+        }
+
+        .social-links a {
+            margin: 0 10px;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .footer-links {
+            margin-top: 20px;
+        }
+
+        .footer-links a {
+            margin: 0 10px;
+            color: #333;
+            text-decoration: none;
+        }
+
+        ul {
+            list-style: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="email-header">
+            <img src="https://cdn.discordapp.com/attachments/995285814978281484/1255020072272003144/image.png?ex=667b9c06&is=667a4a86&hm=622d2ed538529a3d236a3b03a808500326bdae159127bddd78cd401450c5bf95&" alt="MED & CARE Logo" class="logo">
+            <h1>MED & CARE</h1>
+        </div>
+        <div class="email-body">
+            <div class="order-details">
+                <h2>Order Confirmation</h2>
+                <table>
+                    <tr>
+                        <th>Name:</th>
+                        <td>${name}</td>
+                    </tr>
+                    <tr>
+                        <th>Address:</th>
+                        <td>${address}</td>
+                    </tr>
+                    <tr>
+                        <th>Phone Number:</th>
+                        <td>+91 ${phno}</td>
+                    </tr>
+                    <tr>
+                        <th>Email:</th>
+                        <td>${email}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="order-description">
+                <strong>Order has been placed from MED & CARE.<br>
+                Our executive will call you shortly to verify and confirm your order.<br>
+                Please wait for confirmation mail.</strong>
+            </div>
+            <div class="main-website-link">
+                <a href="https://www.medcare.com/login" target="_blank">Log in to your account</a>
+            </div>
+        </div>
+        <div class="email-footer">
+            <p>Best regards,<br>MED & CARE Team</p>
+            <div class="social-links">
+                <p>Follow us on:</p>
+                <a href="https://www.facebook.com" target="_blank">Facebook</a> |
+                <a href="https://www.twitter.com" target="_blank">Twitter</a> |
+                <a href="https://www.linkedin.com" target="_blank">LinkedIn</a> |
+                <a href="https://www.instagram.com" target="_blank">Instagram</a>
+            </div>
+            <div class="footer-links">
+                <a href="unsubscribe_link_here" target="_blank">Unsubscribe</a> |
+                <a href="privacy_policy_link_here" target="_blank">Privacy Policy</a>
+            </div>
+            <p>If you did not place this order, please contact us immediately.</p>
+        </div>
+    </div>
+</body>
+</html>`,
   });
 };
 const formatDate = (timestamp) => {
