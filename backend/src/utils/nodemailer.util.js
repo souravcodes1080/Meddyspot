@@ -100,7 +100,7 @@ const sendMail = async (email, otp) => {
 <body>
     <div class="email-container">
         <div class="email-header">
-            <img src="https://cdn.discordapp.com/attachments/995285814978281484/1255020072272003144/image.png?ex=667ced86&is=667b9c06&hm=3eb236a0baa0787802bdefbc44b442852e1095c70104c22f2815a13a370d47aa&" alt="MED & CARE Logo" class="logo">
+            <img src="https://i.imgur.com/gr2Nhap.png" alt="MED & CARE Logo" class="logo">
             <h1>MED & CARE</h1>
         </div>
         <div class="email-body">
@@ -258,7 +258,7 @@ const sendWelcomeMail = async (email, username) => {
 <body>
     <div class="email-container">
         <div class="email-header">
-            <img src="https://cdn.discordapp.com/attachments/995285814978281484/1255020072272003144/image.png?ex=667b9c06&is=667a4a86&hm=622d2ed538529a3d236a3b03a808500326bdae159127bddd78cd401450c5bf95&" alt="MED & CARE Logo" class="logo">
+            <img src="https://i.imgur.com/gr2Nhap.png" alt="MED & CARE Logo" class="logo">
             <h1>MED & CARE</h1>
         </div>
         <div class="email-body">
@@ -431,7 +431,7 @@ const sendOrderNotif = async (email, name, address, phno) => {
 <body>
     <div class="email-container">
         <div class="email-header">
-            <img src="https://cdn.discordapp.com/attachments/995285814978281484/1255020072272003144/image.png?ex=667b9c06&is=667a4a86&hm=622d2ed538529a3d236a3b03a808500326bdae159127bddd78cd401450c5bf95&" alt="MED & CARE Logo" class="logo">
+            <img src="https://i.imgur.com/gr2Nhap.png" alt="MED & CARE Logo" class="logo">
             <h1>MED & CARE</h1>
         </div>
         <div class="email-body">
@@ -628,7 +628,7 @@ const sendAppointmentNotif = async (email, name, hospital, dr, date, time) => {
 <body>
     <div class="email-container">
         <div class="email-header">
-            <img src="https://cdn.discordapp.com/attachments/995285814978281484/1255020072272003144/image.png?ex=667b9c06&is=667a4a86&hm=622d2ed538529a3d236a3b03a808500326bdae159127bddd78cd401450c5bf95&" alt="MED & CARE Logo" class="logo">
+            <img src="https://i.imgur.com/gr2Nhap.png" alt="MED & CARE Logo" class="logo">
             <h1>MED & CARE</h1>
         </div>
         <div class="email-body">
@@ -796,7 +796,7 @@ const sendEnquiryMail = async (email, hospital, doctor, address,phno) => {
 <body>
     <div class="email-container">
         <div class="email-header">
-            <img src="https://cdn.discordapp.com/attachments/995285814978281484/1255020072272003144/image.png?ex=667b9c06&is=667a4a86&hm=622d2ed538529a3d236a3b03a808500326bdae159127bddd78cd401450c5bf95&" alt="MED & CARE Logo" class="logo">
+            <img src="https://i.imgur.com/gr2Nhap.png" alt="MED & CARE Logo" class="logo">
             <h1>MED & CARE</h1>
         </div>
         <div class="email-body">
