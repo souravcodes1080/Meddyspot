@@ -5,7 +5,7 @@ import upload from "../utils/multer.util.js";
 const orderRouter = express.Router();
 
 orderRouter.post("/place", upload.array('prescription', 10), createOrder);
-orderRouter.get("/", getUserOrders);
+orderRouter.post("/getorders", getUserOrders);
 orderRouter.put('/update/:id', updateOrderStatus);
 
 export { orderRouter };

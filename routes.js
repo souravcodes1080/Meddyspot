@@ -106,7 +106,7 @@ const appointment = {
 
 //order
 const placeOrder = "http://localhost:8080/api/order/place"
-const getUserOrderDetail = "http://localhost:8080/api/order/getUserOrders"
+const getUserOrderDetail = "http://localhost:8080/api/order/"
 
 
 const order = {

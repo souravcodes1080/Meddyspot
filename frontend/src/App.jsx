@@ -18,6 +18,7 @@ import ClinicList from "./pages/List/ClinicList";
 import NursinghomeList from "./pages/List/NursinghomeList";
 import HospitalList from "./pages/List/HospitalList";
 import Search from "./pages/SearchPage/Search";
+import Order from "./pages/profile/Order";
 function App() {
   useScrollToTop();
 
@@ -30,6 +31,7 @@ function App() {
         <Route path="/verify/:email" element={<Verify />} />
         <Route path="/login" element={<Login />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/myorder" element={<Order />} />
         <Route path="/hospital/:id" element={<HospitalDetails />} />
         <Route path="/pharmacy/:id" element={<PharmacyDetails />} />
         <Route path="/hospital" element={<HospitalList />} />

@@ -231,7 +231,7 @@ function HospitalDetails() {
             <div className="doctor">
               {doctor && doctor.length > 0 ? (
                 doctor.map((d, index) => (
-                  <div key={index}>
+                  <div key={index} className="doc">
                     <img src={`http://localhost:8080/${d.profilePic}`} alt="" />
                     <p>{d.name}</p>
                     <p className="specialized">{d.specialized}</p>

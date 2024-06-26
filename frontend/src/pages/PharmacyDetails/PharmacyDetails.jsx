@@ -81,7 +81,7 @@ function PharmacyDetails() {
 
       formData.append("userId", userId);
       formData.append("pharmacyId", id);
-      formData.append("customDetails", instruction);
+      formData.append("instruction", instruction);
       formData.append("name", userName);
       formData.append("email", userEmail);
       formData.append("phoneNumber", userPhoneNumber);
@@ -107,7 +107,7 @@ function PharmacyDetails() {
         }
       );
 
-      if (response.data.suAppointmentccess) {
+      if (response.data.success) {
         toast.success("Order placed successfully!");
         setBookLoading(false);
       } else {

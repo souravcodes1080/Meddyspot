@@ -58,3 +58,13 @@ textarea{
     width: 80px;
     background-color: rgb(146, 0, 0) !important;
 }
+
+.order-item{
+    border: 1px solid rgba(0, 0, 0, 0.112);
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin: 10px 0;
+    display: flex;
+    gap: 40px;
+    align-items: center;
+}   

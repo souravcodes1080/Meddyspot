@@ -74,8 +74,8 @@ function Homepage() {
     setLoading(true);
     const response = await axios.get(
       `http://localhost:8080/api/hospital/nearby?lat=${
-        cookies["lat"] || location.lat
-      }&long=${cookies["long"] || location.long}`
+        location.lat
+      }&long=${location.long}`
     );
     if (response.data.success) {
       setLoading(false);
@@ -90,8 +90,8 @@ function Homepage() {
     setLoading(true);
     const response = await axios.get(
       `http://localhost:8080/api/pharmacy/nearby?lat=${
-        cookies["lat"] || location.lat
-      }&long=${cookies["long"] ||  location.long}`
+        location.lat
+      }&long=${ location.long}`
     );
     if (response.data.success) {
       setLoading(false);
