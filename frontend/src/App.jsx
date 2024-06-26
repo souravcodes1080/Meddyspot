@@ -9,6 +9,8 @@ import Signin from "./pages/Signin/Signin";
 import Login from "./pages/Login/Login";
 import Verify from "./pages/Signin/Verify";
 import Profile from "./pages/profile/Profile";
+import Footer from "./components/Footer/Footer";
+import HospitalDetails from "./pages/HospitalDetails/HospitalDetails";
 function App() {
   return (
     <div className="app-container">
@@ -19,7 +21,10 @@ function App() {
         <Route path="/verify/:email" element={<Verify />} />
         <Route path="/login" element={<Login />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/hospital/:id" element={<HospitalDetails />} />
+
       </Routes>
+      <Footer/>
 
       <ToastContainer
         position="bottom-center"

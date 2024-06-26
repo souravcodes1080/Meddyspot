@@ -1,9 +1,9 @@
-.hero-wrapper{
+.hero-wrapper {
   width: 100vw;
   height: 60vh;
   background-image: url("../../../public/assets/hero.png");
   background-size: cover;
-    background-repeat: repeat;
+  background-repeat: repeat;
 }
 .hero {
   display: flex;
@@ -17,7 +17,6 @@
   background-color: #ffffff2b;
 }
 .hero-content {
-    
   display: flex;
   justify-content: center;
   align-items: center;
@@ -74,38 +73,110 @@
   padding: 0 15px;
 }
 
-.category{
+.category {
   overflow: scroll;
 }
-.category ul{
-    list-style: none;
-    display: flex;
-    gap: 40px;
-    padding: 0;
+.category ul {
+  list-style: none;
+  display: flex;
+  gap: 40px;
+  padding: 0;
 }
-.category li{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    cursor: pointer;
-    transition: .3s ease;
+.category li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.3s ease;
 }
-.category li:hover{
-    filter: brightness(0.7);
+.category li:hover {
+  filter: brightness(0.7);
 }
-.category li img{
-    
-    width: 150px;
-    height: 150px;
-    border-radius: 100px;
+.category li img {
+  width: 150px;
+  height: 150px;
+  border-radius: 100px;
 }
 
+.hospital-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+  padding: 16px;
+}
+
+.newsletter {
+  margin: 120px 0;
+  display: flex;
+  align-items: center;
+}
+.newsletter-left {
+  flex: 1;
+}
+.newsletter-right h2 {
+  font-size: 35px;
+  margin-bottom: 0;
+}
+.newsletter-right p {
+  font-size: 16px;
+  padding: 0;
+}
+.newsletter-right {
+  flex: 1;
+}
+.email-box {
+  display: flex;
+  align-items: center;
+  /* padding: 20px; */
+  padding-left: 30px;
+  height: 55px;
+  border: 2px solid rgba(0, 0, 0, 0.294);
+  border-radius: 7px;
+  overflow: hidden;
+}
+.email-box input {
+  height: 100%;
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.newsletter button:hover {
+  background-color: #193c63;
+}
+.newsletter button {
+  width: 100%;
+  height: 55px;
+  border-radius: 7px;
+  outline: none;
+  border: none;
+  background-color: #275489;
+  color: white;
+  transition: 0.3s ease all;
+  font-size: 16px;
+  margin-top: 20px;
+  cursor: pointer;
+}
 
 @media (max-width: 1200px) {
+  .newsletter .newsletter-left img {
+    width: 350px;
+  }
 }
 @media (max-width: 800px) {
   .hero-search {
     width: 90%;
+  }
+  .hospital-list {
+    grid-template-columns: 1fr 1fr;
+  }
+  .newsletter {
+    flex-direction: column-reverse;
+    gap: 50px;
   }
 }
 @media (max-width: 500px) {
@@ -115,11 +186,20 @@
   .hero-content p {
     font-size: 20px;
   }
-  
-  .category li img{
-    
+
+  .category li img {
     width: 100px;
     height: 100px;
     border-radius: 100px;
-}
+  }
+
+  .hospital-list {
+    grid-template-columns: 1fr;
+  }
+
+  .newsletter {
+    margin: 60px 0;
+    display: flex;
+    align-items: center;
+  }
 }
