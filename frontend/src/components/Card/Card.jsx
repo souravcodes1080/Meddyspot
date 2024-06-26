@@ -34,7 +34,7 @@ function Card({ hospital }) {
             <h3>{hospital.name}</h3>
         <p>{hospital.address}</p>
         <div className="location">
-            <img src={location} alt="" width={"23px"}/>
+            <img src={location} alt="" width={"18px"}/>
         {!cookie["lat"] ? <></>: <p>{distance} km away</p>}
         </div>
         </div>

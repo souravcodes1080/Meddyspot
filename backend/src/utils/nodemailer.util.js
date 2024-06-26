@@ -1,22 +1,22 @@
 import nodemailer from "nodemailer";
 
 const sendMail = async (email, otp) => {
-  const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: process.env.SMTP_PORT,
-    secure: false,
-    auth: {
-      user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASSWORD,
-    },
-  });
+    const transporter = nodemailer.createTransport({
+        host: process.env.SMTP_HOST,
+        port: process.env.SMTP_PORT,
+        secure: false,
+        auth: {
+            user: process.env.SMTP_USER,
+            pass: process.env.SMTP_PASSWORD,
+        },
+    });
 
-  await transporter.sendMail({
-    from: process.env.SMTP_USER,
-    to: email,
-    subject: "Med & Care email verification.",
-    text: `Your OTP for email verification is: ${otp}. The otp is valid for 10 min. Do not share otp with anyone else.`,
-    html: `<!DOCTYPE html>
+    await transporter.sendMail({
+        from: process.env.SMTP_USER,
+        to: email,
+        subject: "Med & Care email verification.",
+        text: `Your OTP for email verification is: ${otp}. The otp is valid for 10 min. Do not share otp with anyone else.`,
+        html: `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -100,7 +100,7 @@ const sendMail = async (email, otp) => {
 <body>
     <div class="email-container">
         <div class="email-header">
-            <img src="https://cdn.discordapp.com/attachments/995285814978281484/1255020072272003144/image.png?ex=667b9c06&is=667a4a86&hm=622d2ed538529a3d236a3b03a808500326bdae159127bddd78cd401450c5bf95&" alt="MED & CARE Logo" class="logo">
+            <img src="https://cdn.discordapp.com/attachments/995285814978281484/1255020072272003144/image.png?ex=667ced86&is=667b9c06&hm=3eb236a0baa0787802bdefbc44b442852e1095c70104c22f2815a13a370d47aa&" alt="MED & CARE Logo" class="logo">
             <h1>MED & CARE</h1>
         </div>
         <div class="email-body">
@@ -127,25 +127,25 @@ const sendMail = async (email, otp) => {
     </div>
 </body>
 </html>`,
-  });
+    });
 };
 const sendWelcomeMail = async (email, username) => {
-  const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: process.env.SMTP_PORT,
-    secure: false,
-    auth: {
-      user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASSWORD,
-    },
-  });
+    const transporter = nodemailer.createTransport({
+        host: process.env.SMTP_HOST,
+        port: process.env.SMTP_PORT,
+        secure: false,
+        auth: {
+            user: process.env.SMTP_USER,
+            pass: process.env.SMTP_PASSWORD,
+        },
+    });
 
-  await transporter.sendMail({
-    from: process.env.SMTP_USER,
-    to: email,
-    subject: "Welcome to Our App!!",
-    text: `Greetings ${username}. We hope yoou will love our app. Stay safe and be happy.`,
-    html: `<!DOCTYPE html>
+    await transporter.sendMail({
+        from: process.env.SMTP_USER,
+        to: email,
+        subject: "Welcome to Our App!!",
+        text: `Greetings ${username}. We hope yoou will love our app. Stay safe and be happy.`,
+        html: `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -293,25 +293,25 @@ const sendWelcomeMail = async (email, username) => {
     </div>
 </body>
 </html>`,
-  });
+    });
 };
 const sendOrderNotif = async (email, name, address, phno) => {
-  const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: process.env.SMTP_PORT,
-    secure: false,
-    auth: {
-      user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASSWORD,
-    },
-  });
+    const transporter = nodemailer.createTransport({
+        host: process.env.SMTP_HOST,
+        port: process.env.SMTP_PORT,
+        secure: false,
+        auth: {
+            user: process.env.SMTP_USER,
+            pass: process.env.SMTP_PASSWORD,
+        },
+    });
 
-  await transporter.sendMail({
-    from: process.env.SMTP_USER,
-    to: email,
-    subject: "Your order has been placed",
-    text: `Greetings ${name}. Order has been placed from Med&Care. `,
-    html: `<html lang="en">
+    await transporter.sendMail({
+        from: process.env.SMTP_USER,
+        to: email,
+        subject: "Your order has been placed",
+        text: `Greetings ${name}. Order has been placed from Med&Care. `,
+        html: `<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -483,31 +483,31 @@ const sendOrderNotif = async (email, name, address, phno) => {
     </div>
 </body>
 </html>`,
-  });
+    });
 };
 const formatDate = (timestamp) => {
-  const date = new Date(timestamp);
-  const options = { year: "numeric", month: "long", day: "numeric" };
-  return date.toLocaleDateString(undefined, options);
+    const date = new Date(timestamp);
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    return date.toLocaleDateString(undefined, options);
 };
 
 const sendAppointmentNotif = async (email, name, hospital, dr, date, time) => {
-  const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: process.env.SMTP_PORT,
-    secure: false,
-    auth: {
-      user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASSWORD,
-    },
-  });
+    const transporter = nodemailer.createTransport({
+        host: process.env.SMTP_HOST,
+        port: process.env.SMTP_PORT,
+        secure: false,
+        auth: {
+            user: process.env.SMTP_USER,
+            pass: process.env.SMTP_PASSWORD,
+        },
+    });
 
-  await transporter.sendMail({
-    from: process.env.SMTP_USER,
-    to: email,
-    subject: "Appointment Reminder from Med&Care.",
-    text: `Greetings ${name}. Appointment Reminder from Med&Care. Your Appointment is created in ${hospital}.`,
-    html: `<!DOCTYPE html>
+    await transporter.sendMail({
+        from: process.env.SMTP_USER,
+        to: email,
+        subject: "Appointment Reminder from Med&Care.",
+        text: `Greetings ${name}. Appointment Reminder from Med&Care. Your Appointment is created in ${hospital}.`,
+        html: `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -683,8 +683,186 @@ const sendAppointmentNotif = async (email, name, hospital, dr, date, time) => {
     </div>
 </body>
 </html>`,
-  });
+    });
 };
+const sendEnquiryMail = async (email, hospital, doctor, address,phno) => {
+    const transporter = nodemailer.createTransport({
+        host: process.env.SMTP_HOST,
+        port: process.env.SMTP_PORT,
+        secure: false,
+        auth: {
+            user: process.env.SMTP_USER,
+            pass: process.env.SMTP_PASSWORD,
+        },
+    });
 
-export { sendWelcomeMail, sendAppointmentNotif, sendOrderNotif };
+    await transporter.sendMail({
+        from: process.env.SMTP_USER,
+        to: email,
+        subject: "Welcome to Our App!!",
+        text: `Greetings ${username}. We hope yoou will love our app. Stay safe and be happy.`,
+        html: `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Enquiry Details - MED & CARE</title>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .email-container {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: auto;
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            animation: fadeIn 2s;
+        }
+
+        .email-header {
+            background: #dcdcdc;
+            color: #28791d;
+            padding: 10px;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .email-body {
+            padding: 20px;
+            background: #fff;
+            border-radius: 0 0 10px 10px;
+        }
+
+        .email-body p {
+            margin-bottom: 15px;
+        }
+
+        .enquiry-details {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .enquiry-details table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .enquiry-details th, .enquiry-details td {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .email-footer {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #555;
+        }
+
+        .logo {
+            max-width: 100px;
+            margin: 10px auto;
+        }
+
+        .social-links {
+            margin: 20px 0;
+        }
+
+        .social-links a {
+            margin: 0 10px;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .footer-links {
+            margin-top: 20px;
+        }
+
+        .footer-links a {
+            margin: 0 10px;
+            color: #333;
+            text-decoration: none;
+        }
+
+        ul {
+            list-style: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="email-header">
+            <img src="https://cdn.discordapp.com/attachments/995285814978281484/1255020072272003144/image.png?ex=667b9c06&is=667a4a86&hm=622d2ed538529a3d236a3b03a808500326bdae159127bddd78cd401450c5bf95&" alt="MED & CARE Logo" class="logo">
+            <h1>MED & CARE</h1>
+        </div>
+        <div class="email-body">
+            <div class="enquiry-details">
+                <h2>Hospital Enquiry Details</h2>
+                <table>
+                    <tr>
+                        <th>Hospital Name:</th>
+                        <td>MED & CARE Hospital</td>
+                    </tr>
+                    <tr>
+                        <th>Address:</th>
+                        <td>123 Health St., Wellness City, State, ZIP</td>
+                    </tr>
+                    <tr>
+                        <th>Contact No:</th>
+                        <td>(123) 456-7890</td>
+                    </tr>
+                </table>
+                <h3>Available Doctors and Specialties:</h3>
+                <table>
+                    <tr>
+                        <th>Doctor</th>
+                        <th>Specialty</th>
+                    </tr>
+                    <tr>
+                        <td>Dr. John Smith</td>
+                        <td>Cardiology</td>
+                    </tr>
+                    <tr>
+                        <td>Dr. Jane Doe</td>
+                        <td>Neurology</td>
+                    </tr>
+                    <tr>
+                        <td>Dr. Alice Johnson</td>
+                        <td>Orthopedics</td>
+                    </tr>
+                </table>
+                <h3>About the Hospital</h3>
+                <p>
+                    MED & CARE Hospital is a premier healthcare institution providing top-notch medical services. 
+                    We are dedicated to offering comprehensive care and treatment, supported by a team of experienced 
+                    doctors and state-of-the-art facilities. Our mission is to improve the health and well-being 
+                    of our community through excellence in patient care, education, and research.
+                </p>
+            </div>
+        </div>
+        <div class="email-footer">
+            <p>Best regards,<br>MED & CARE Team</p>
+            <div class="social-links">
+                <p>Follow us on:</p>
+                <a href="https://www.facebook.com" target="_blank">Facebook</a> |
+                <a href="https://www.twitter.com" target="_blank">Twitter</a> |
+                <a href="https://www.linkedin.com" target="_blank">LinkedIn</a> |
+                <a href="https://www.instagram.com" target="_blank">Instagram</a>
+            </div>
+            <div class="footer-links">
+                <a href="https://www.medcare.com/unsubscribe" target="_blank">Unsubscribe</a> |
+                <a href="https://www.medcare.com/privacy-policy" target="_blank">Privacy Policy</a>
+            </div>
+            <p>If you did not make this enquiry, please contact us immediately.</p>
+        </div>
+    </div>
+</body>
+</html>`,
+    });
+};
+export { sendWelcomeMail, sendAppointmentNotif, sendOrderNotif, sendEnquiryMail };
 export default sendMail;
