@@ -31,7 +31,12 @@ function Homepage() {
     fetchPharmacy();
     fetchLoactionData();
   }, []);
-  
+  useEffect(() => {
+    fetchHospital();
+    fetchPharmacy();
+   
+  }, [location]);
+
   const fetchLoactionData = async () => {
     setFetching(true);
     if (navigator.geolocation) {
@@ -40,7 +45,7 @@ function Homepage() {
           const lat = position.coords.latitude;
           const long = position.coords.longitude;
           setLocation({ lat, long });
-  
+
           try {
             const response = await axios.get(
               `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${long}&localityLanguage=en`
@@ -64,32 +69,36 @@ function Homepage() {
       toast.error("Geolocation is not supported by the browser.");
     }
   };
-  
+
   const fetchHospital = async () => {
     setLoading(true);
     const response = await axios.get(
-      `http://localhost:8080/api/hospital/nearby?lat=${cookies["lat"] || 22.569859}&long=${cookies["long"] || 88.364241}`
+      `http://localhost:8080/api/hospital/nearby?lat=${
+        cookies["lat"] || location.lat
+      }&long=${cookies["long"] || location.long}`
     );
     if (response.data.success) {
       setLoading(false);
       setNearybyHospital(response.data.hospitals);
     } else {
       setLoading(false);
-      toast.error("Something went wrong fetching hospital.");
+      
     }
   };
 
   const fetchPharmacy = async () => {
     setLoading(true);
     const response = await axios.get(
-      `http://localhost:8080/api/pharmacy/nearby?lat=${cookies["lat"] || 22.569859}&long=${cookies["long"] || 88.364241}`
+      `http://localhost:8080/api/pharmacy/nearby?lat=${
+        cookies["lat"] || location.lat
+      }&long=${cookies["long"] ||  location.long}`
     );
     if (response.data.success) {
       setLoading(false);
       setNearybyPharmacies(response.data.pharmacy);
     } else {
       setLoading(false);
-      toast.error("Something went wrong fetching pharmacies.");
+      // toast.error("Something went wrong fetching pharmacies.");
     }
   };
 
@@ -125,7 +134,7 @@ function Homepage() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 onKeyDown={handleSearchKeyPress}
-                placeholder="Search for hospitals, pharmacy all over India"
+                placeholder="Search for hospitals, pharmacy all across India"
               />
             </div>
           </form>
@@ -175,7 +184,11 @@ function Homepage() {
               <p>Loading...</p>
             ) : nearbyHospital && nearbyHospital.length > 0 ? (
               nearbyHospital.map((hospital) => (
-                <Link key={hospital._id} to={`/hospital/${hospital._id}`} className="link">
+                <Link
+                  key={hospital._id}
+                  to={`/hospital/${hospital._id}`}
+                  className="link"
+                >
                   <Card hospital={hospital} />
                 </Link>
               ))
@@ -194,7 +207,11 @@ function Homepage() {
               <p>Loading...</p>
             ) : nearbyPharmacies && nearbyPharmacies.length > 0 ? (
               nearbyPharmacies.slice(0, 6).map((pharmacy) => (
-                <Link key={pharmacy._id} to={`/pharmacy/${pharmacy._id}`} className="link">
+                <Link
+                  key={pharmacy._id}
+                  to={`/pharmacy/${pharmacy._id}`}
+                  className="link"
+                >
                   <PharmacyCard pharmacy={pharmacy} />
                 </Link>
               ))
