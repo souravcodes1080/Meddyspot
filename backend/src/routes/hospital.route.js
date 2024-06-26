@@ -5,6 +5,9 @@ import {
   getAllHospital,
   hospitalById,
   nearbyHospitals,
+  nearbyOnlyClinics,
+  nearbyOnlyHospitals,
+  nearbyOnlyNursingHomes,
   searchHospitals,
   updateHospital,
 } from "../controllers/hospital.controller.js";
@@ -17,5 +20,9 @@ hospitalRouter.get("/getbyId/:id", hospitalById);
 hospitalRouter.get("/search", searchHospitals);
 hospitalRouter.get("/nearby", nearbyHospitals);
 hospitalRouter.post("/update/:id", updateHospital);
+
+hospitalRouter.get("/nearbyonlyhospital", nearbyOnlyHospitals);
+hospitalRouter.get("/nearbyonlynursinghome", nearbyOnlyNursingHomes);
+hospitalRouter.get("/nearbyonlyclinic", nearbyOnlyClinics);
 
 export { hospitalRouter };

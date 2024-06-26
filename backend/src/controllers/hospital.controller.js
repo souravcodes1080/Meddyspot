@@ -42,9 +42,9 @@ const addHospital = async (req, res) => {
 
     const image = req.files ? req.files.map((file) => file.path) : [];
     const location = {
-        type: 'Point',
-        coordinates: [parseFloat(long), parseFloat(lat)], // Ensure coordinates are parsed as floats
-      };
+      type: "Point",
+      coordinates: [parseFloat(long), parseFloat(lat)], // Ensure coordinates are parsed as floats
+    };
     const newHospital = new Hospital({
       name,
       email,
@@ -54,7 +54,7 @@ const addHospital = async (req, res) => {
       type,
       specialized,
       facilities,
-      doctor:null,
+      doctor,
       lat,
       long,
       address,
@@ -65,7 +65,7 @@ const addHospital = async (req, res) => {
       website,
       review,
       rating,
-      location
+      location,
     });
 
     // Save the hospital to the database
@@ -90,8 +90,7 @@ const hospitalById = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const hospital = await Hospital.findById(id).populate('doctor');
-
+    const hospital = await Hospital.findById(id).populate("doctor");
     if (!hospital) {
       return res.json({
         success: false,
@@ -142,16 +141,16 @@ const nearbyHospitals = async (req, res) => {
     const parsedLat = parseFloat(lat);
     const parsedLong = parseFloat(long);
     const hospitals = await Hospital.find({
-        location: {
-          $near: {
-            $geometry: {
-              type: 'Point',
-              coordinates: [parsedLong, parsedLat],
-            },
-            $maxDistance: 100000,
+      location: {
+        $near: {
+          $geometry: {
+            type: "Point",
+            coordinates: [parsedLong, parsedLat],
           },
+          $maxDistance: 100000,
         },
-      });
+      },
+    });
 
     return res.json({
       success: true,
@@ -166,7 +165,6 @@ const nearbyHospitals = async (req, res) => {
     });
   }
 };
-
 
 const updateHospital = async (req, res) => {
   try {
@@ -203,7 +201,7 @@ const updateHospital = async (req, res) => {
 
     // Handle image updates
     // const newImages = req.files ? req.files.map((file) => file.path) : [];
-    
+
     // Find the hospital by ID
     const hospital = await Hospital.findById(id);
 
@@ -254,4 +252,113 @@ const updateHospital = async (req, res) => {
     });
   }
 };
-export { getAllHospital, addHospital, hospitalById, searchHospitals, nearbyHospitals, updateHospital };
+
+const nearbyOnlyHospitals = async (req, res) => {
+  try {
+    const { lat, long } = req.query;
+    const parsedLat = parseFloat(lat);
+    const parsedLong = parseFloat(long);
+    const hospitals = await Hospital.find({
+      location: {
+        $near: {
+          $geometry: {
+            type: "Point",
+            coordinates: [parsedLong, parsedLat],
+          },
+          $maxDistance: 100000, // Adjust the distance as per your requirement
+        },
+      },
+      "type.0": "Hospital", // Filter based on the first element of the type array
+    });
+
+    return res.json({
+      success: true,
+      message: "Nearby hospitals fetched successfully.",
+      hospitals,
+    });
+  } catch (err) {
+    console.error(err);
+    return res.json({
+      success: false,
+      message: "Error while searching hospitals.",
+    });
+  }
+};
+
+const nearbyOnlyNursingHomes = async (req, res) => {
+  try {
+    const { lat, long } = req.query;
+    const parsedLat = parseFloat(lat);
+    const parsedLong = parseFloat(long);
+
+    const nursingHomes = await Hospital.find({
+      location: {
+        $near: {
+          $geometry: {
+            type: "Point",
+            coordinates: [parsedLong, parsedLat],
+          },
+          $maxDistance: 100000, // Adjust the distance as per your requirement
+        },
+      },
+      "type.0": "Nursing Home", // Filter based on the first element of the type array
+    });
+
+    return res.json({
+      success: true,
+      message: "Nearby nursing homes fetched successfully.",
+      nursingHomes,
+    });
+  } catch (err) {
+    console.error(err);
+    return res.json({
+      success: false,
+      message: "Error while searching nursing homes.",
+    });
+  }
+};
+
+const nearbyOnlyClinics = async (req, res) => {
+  try {
+    const { lat, long } = req.query;
+    const parsedLat = parseFloat(lat);
+    const parsedLong = parseFloat(long);
+
+    const clinics = await Hospital.find({
+      location: {
+        $near: {
+          $geometry: {
+            type: "Point",
+            coordinates: [parsedLong, parsedLat],
+          },
+          $maxDistance: 100000, // Adjust the distance as per your requirement
+        },
+      },
+      "type.0": "Clinic", // Filter based on the first element of the type array
+    });
+
+    return res.json({
+      success: true,
+      message: "Nearby clinics fetched successfully.",
+      clinics,
+    });
+  } catch (err) {
+    console.error(err);
+    return res.json({
+      success: false,
+      message: "Error while searching clinics.",
+    });
+  }
+};
+
+export {
+  getAllHospital,
+  addHospital,
+  hospitalById,
+  searchHospitals,
+  nearbyHospitals,
+  updateHospital,
+  nearbyOnlyHospitals,
+  nearbyOnlyNursingHomes,
+  nearbyOnlyClinics,
+};

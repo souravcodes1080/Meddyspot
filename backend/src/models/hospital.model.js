@@ -34,9 +34,12 @@ const hospitalSchema = new mongoose.Schema(
       {
         type: Schema.Types.ObjectId,
         ref: "Doctor",
+        default: []
       },
     ],
-
+    // doctor:{
+    //   type: String, 
+    // },
     lat: {
       type: Number,
       required: true,

@@ -26,6 +26,9 @@ const getAllHospital = "http://localhost:8080/api/hospital/";
 const getHospitalByid = "http://localhost:8080/api/hospital/getbyId/:id";
 const searchHospital = "http://localhost:8080/api/hospital/search?query=";
 const nearbyHospital = "http://localhost:8080/api/hospital/nearby?lat=&long=";
+const nearbyOnlyHospital = "http://localhost:8080/api/hospital/nearbyonlyhospital?lat=&long=";
+const nearbyOnlyNursingHomes = "http://localhost:8080/api/hospital/nearbyonlynursinghome?lat=&long=";
+const nearbyOnlyClinic = "http://localhost:8080/api/hospital/nearbyonlyclinic?lat=&long=";
 const updateHospital = "http://localhost:8080/api/hospital/update/:id";
 //do not update picture, its bugged rn
 
@@ -100,3 +103,19 @@ const appointment = {
     address: "123 Main St, City, Country",
   },
 };
+
+//order
+const placeOrder = "http://localhost:8080/api/order/place"
+const getUserOrderDetail = "http://localhost:8080/api/order/getUserOrders"
+
+
+const order = {
+  user: "66785033d356960cc1f31044",
+  prescription: ["photo"],
+  pharmacy: "66785033d356960cc1f31044",
+  customerDetails: "Only 1 tablet",
+  name:"sourav",
+  email: "sourav@gmail.com",
+  phoneNumber: "987876566",
+  address: "13 Cornelia Street"
+}

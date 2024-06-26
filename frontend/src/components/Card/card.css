@@ -15,7 +15,8 @@
   width: 100%;
   border-radius: 10px;
   overflow: hidden;
-  border: 1px solid rgba(0, 0, 0, 0.159);
+  /* border: 1px solid rgba(0, 0, 0, 0.159); */
+  box-shadow: 1px 1px 20px rgba(0, 0, 0, 0.111);
 }
 .hospital-card .hospital-img:hover {
     filter: brightness(0.8);

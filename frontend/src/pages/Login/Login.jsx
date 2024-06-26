@@ -13,7 +13,7 @@ function Login() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const [cookies, setCookie] = useCookies(["token", "name", "email", "lat", "long", "phoneNumber"])
+  const [cookies, setCookie] = useCookies(["token", "userid", "name", "email", "lat", "long", "phoneNumber", "address"])
   
   useEffect(() => {
     if (cookies["token"]) {
@@ -55,11 +55,12 @@ function Login() {
         console.log(response.data)
         setCookie("token", response.data.token);
         setCookie("name", response.data.name);
+        setCookie("userid", response.data.userid);
         setCookie("email", response.data.email);
         setCookie("phoneNumber", response.data.phoneNumber);
         setCookie("lat", response.data.location.lat);
         setCookie("long", response.data.location.long);
-        toast.success("Login successful!");
+        setCookie("address", response.data.address);
         setEmail("");
         setPassword("");
         navigate(`/`);
