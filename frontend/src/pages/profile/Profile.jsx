@@ -15,6 +15,7 @@ function Profile() {
     "phoneNumber",
     "lat",
     "long",
+    "address"
   ]);
   const [name, setName] = useState(cookies["name"]);
   const [email, setEmail] = useState(cookies["email"]);
@@ -103,7 +104,7 @@ function Profile() {
 
       if (response.data.success) {
         toast.success("Profile Updated!");
-
+        setCookie("address", address)
         await fetchUserDetails();
         setLoading(false);
       } else {
@@ -119,11 +120,13 @@ function Profile() {
   const logout = async () => {
     //clear cookies
     removeCookie("name");
+    removeCookie("userid");
     removeCookie("phoneNumber");
     removeCookie("email");
     removeCookie("lat");
     removeCookie("long");
     removeCookie("token");
+    removeCookie("address")
     navigate("/");
   };
   return (

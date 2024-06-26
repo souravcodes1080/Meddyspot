@@ -11,8 +11,19 @@ function HospitalDetails() {
   const { id } = useParams();
   const [hospitalDetails, setHospitalDetails] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [cookie] = useCookies("token")
-
+  const [bookLoading, setBookLoading] = useState(false);
+  const [cookie] = useCookies([
+    "token",
+    "userid",
+    "name",
+    "phoneNumber",
+    "email",
+    "addess",
+  ]);
+  const [bookingPortal, setBookingPortal] = useState(false);
+  const [selectedDoctor, setSelectedDoctor] = useState("");
+  const [appointmentDate, setAppointmentDate] = useState("");
+  const [appointmentTime, setAppointmentTime] = useState("");
   useEffect(() => {
     fetchHospitalDetails();
   }, []);
@@ -66,6 +77,48 @@ function HospitalDetails() {
     website,
     rating,
   } = hospitalDetails;
+
+  const bookApointment = async () => {
+    setBookingPortal(true);
+  };
+
+  const submitBookAppointment = async (e) => {
+    e.preventDefault();
+    try {
+      setBookLoading(true)
+      const appointmentData = {
+        user: cookie.userid, // Replace with actual user ID
+        hospital: id,
+        doctor: selectedDoctor,
+        appointmentDate,
+        appointmentTime,
+        userContact: {
+          name: cookie["name"],
+          email: cookie["email"],
+          phoneNumber: cookie["phoneNumber"],
+          address: cookie["address"], // Replace with actual user address
+        },
+      };
+      console.log(appointmentData);
+      const response = await axios.post(
+        "http://localhost:8080/api/appointment/book",
+        appointmentData
+      );
+
+      if (response.data.success) {
+        toast.success("Appointment booked successfully!");
+        setBookLoading(false)
+        // Optionally, reset form fields or manage state as needed
+      } else {
+        toast.error("Failed to book appointment. Please try again.");
+        setBookLoading(false)
+      }
+    } catch (error) {
+      console.error("Error booking appointment:", error);
+      toast.error("Failed to book appointment. Please try again.");
+    }
+  };
+
   return (
     <>
       <div className="container">
@@ -106,7 +159,7 @@ function HospitalDetails() {
               <div className="share">🔗 Share</div>
               <div className="heart">💓</div>
             </div>
-         
+
             {cookie["token"] ? (
               <div className="booknow">
                 <button>Enquire Now</button>
@@ -206,9 +259,68 @@ function HospitalDetails() {
           </div>
           <div className="banner-right">
             <div className="booknow">
-              <button>Book an Appointment</button>
+              <button onClick={bookApointment}>Book an Appointment</button>
             </div>
           </div>
+        </section>
+        <section className="">
+          {bookingPortal &&
+            (!cookie["token"] ? (
+              <p className="alert">Please login to book appointment.</p>
+            ) : cookie["address"] == "undefined" || "" || null ? (
+              <p className="alert">
+                Please update your profile to book appointment.
+              </p>
+            ) : (
+              <form
+                onSubmit={submitBookAppointment}
+                className="appointment-form"
+              >
+                <div className="appointment-inputs">
+                  <div className="appointment-input">
+                    <label htmlFor="doctor">Choose Doctor:</label>
+                    <select
+                      id="doctor"
+                      name="doctor"
+                      value={selectedDoctor}
+                      onChange={(e) => setSelectedDoctor(e.target.value)}
+                      required
+                    >
+                      <option value="">Choose Doctor</option>
+                      {doctor.map((d, index) => (
+                        <option key={index} value={d._id}>
+                          {d.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="appointment-input">
+                    <label htmlFor="appointmentDate">Appointment Date:</label>
+                    <input
+                    
+                      type="date"
+                      id="appointmentDate"
+                      name="appointmentDate"
+                      value={appointmentDate}
+                      onChange={(e) => setAppointmentDate(e.target.value)}
+                      required
+                    />
+                  </div>
+                  <div className="appointment-input">
+                    <label htmlFor="appointmentTime">Appointment Time:</label>
+                    <input
+                      type="time"
+                      id="appointmentTime"
+                      name="appointmentTime"
+                      value={appointmentTime}
+                      onChange={(e) => setAppointmentTime(e.target.value)}
+                      required
+                    />
+                  </div>
+                  <button type="submit">{bookLoading? "Appointment booking..." : "Book Appointment"}</button>
+                </div>
+              </form>
+            ))}
         </section>
       </div>
     </>

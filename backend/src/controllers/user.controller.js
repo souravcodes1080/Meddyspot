@@ -136,6 +136,7 @@ const login = async (req, res) => {
       return res.json({
         success: true,
         message: "Login sucessful.",
+        userid: existingUser._id,
         name: existingUser.name,
         gender: existingUser.gender,
         age: existingUser.age,
@@ -143,6 +144,7 @@ const login = async (req, res) => {
         phoneNumber: existingUser.phoneNumber,
         biodata: existingUser.biodata,
         location: existingUser.location,
+        address:existingUser.address,
         token: token,
       });
     } else {
