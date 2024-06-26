@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import "./header.css";
 import logo from "../../../public/assets/logo.png";
 import user from "../../../public/assets/user.png";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 function Header() {
   const navigate = useNavigate();
@@ -19,7 +19,14 @@ function Header() {
               <li onClick={() => navigate("/")}>
                 <img src={logo} alt="" />
               </li>
-              <li>Features</li>
+              {cookies["token"] ? (
+                <Link className="link" to={"/myorder"}>
+                  <li>My orders</li>
+                </Link>
+              ) : (
+                <></>
+              )}
+
               <li>Book Appointment</li>
               <li>Pharmacy</li>
               <li>About Us</li>
@@ -33,7 +40,9 @@ function Header() {
                   src={user}
                   alt=""
                   className="user-icon"
-                  onClick={() => {navigate("/profile")}}
+                  onClick={() => {
+                    navigate("/profile");
+                  }}
                 />
                 <p>{firstName}</p>{" "}
               </>

@@ -107,11 +107,11 @@ function PharmacyDetails() {
         }
       );
 
-      if (response.data.success) {
-        toast.success("Appointment booked successfully!");
+      if (response.data.suAppointmentccess) {
+        toast.success("Order placed successfully!");
         setBookLoading(false);
       } else {
-        toast.error("Failed to book appointment. Please try again.");
+        toast.error("Failed to place order. Please try again.");
         setBookLoading(false);
       }
     } catch (error) {
