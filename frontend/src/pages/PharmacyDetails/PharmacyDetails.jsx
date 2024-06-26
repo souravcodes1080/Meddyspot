@@ -5,11 +5,23 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useCookies } from "react-cookie";
+
 function PharmacyDetails() {
   const { id } = useParams();
-  const [cookie] = useCookies("token");
   const [pharmacyDetails, setPharmacyDetails] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [bookLoading, setBookLoading] = useState(false);
+  const [cookies] = useCookies([
+    "token",
+    "userid",
+    "name",
+    "phoneNumber",
+    "email",
+    "address",
+  ]);
+  const [bookingPortal, setBookingPortal] = useState(false);
+  const [prescription, setPrescription] = useState([]);
+  const [instruction, setInstructions] = useState("");
 
   useEffect(() => {
     fetchPharmacyDetails();
@@ -25,14 +37,87 @@ function PharmacyDetails() {
       if (response.data.success) {
         setLoading(false);
         setPharmacyDetails(response.data.pharmacy);
-        console.log(response.data.pharmacy);
       } else {
         setLoading(false);
         toast.error("Error fetching pharmacy details.");
       }
     } catch (error) {
       console.log(error);
+      setLoading(false);
       toast.error("Error fetching pharmacy details.");
+    }
+  };
+
+  const bookAppointment = async () => {
+    setBookingPortal(true);
+  };
+
+  const handlePrescriptionChange = (e) => {
+    setPrescription([...e.target.files]);
+  };
+  const submitBookAppointment = async (e) => {
+    e.preventDefault();
+    try {
+      setBookLoading(true);
+      const formData = new FormData();
+
+      const userId = cookies.userid;
+      const userName = cookies.name;
+      const userEmail = cookies.email;
+      const userPhoneNumber = cookies.phoneNumber;
+      const userAddress = cookies.address;
+
+      if (
+        !userId ||
+        !userName ||
+        !userEmail ||
+        !userPhoneNumber ||
+        !userAddress
+      ) {
+        toast.error("User information is incomplete.");
+        setBookLoading(false);
+        return;
+      }
+
+      formData.append("userId", userId);
+      formData.append("pharmacyId", id);
+      formData.append("customDetails", instruction);
+      formData.append("name", userName);
+      formData.append("email", userEmail);
+      formData.append("phoneNumber", userPhoneNumber);
+      formData.append("address", userAddress);
+
+      // Append prescription files
+      for (let i = 0; i < prescription.length; i++) {
+        formData.append("prescription", prescription[i]);
+      }
+
+      // Log FormData entries
+      for (let [key, value] of formData.entries()) {
+        console.log(`${key}:`, value);
+      }
+
+      const response = await axios.post(
+        "http://localhost:8080/api/order/place",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      if (response.data.success) {
+        toast.success("Appointment booked successfully!");
+        setBookLoading(false);
+      } else {
+        toast.error("Failed to book appointment. Please try again.");
+        setBookLoading(false);
+      }
+    } catch (error) {
+      console.error("Error booking appointment:", error);
+      toast.error("Failed to book appointment. Please try again.");
+      setBookLoading(false);
     }
   };
 
@@ -52,18 +137,14 @@ function PharmacyDetails() {
     type,
     desc,
     specialized,
-    facilities,
-    doctor,
-    lat,
-    long,
     address,
     city,
     state,
     pincode,
-    gmapLink,
     website,
     rating,
   } = pharmacyDetails;
+
   return (
     <>
       <div className="container">
@@ -104,7 +185,7 @@ function PharmacyDetails() {
               <div className="share">🔗 Share</div>
               <div className="heart">💓</div>
             </div>
-            {cookie["token"] ? (
+            {cookies.token ? (
               <div className="booknow">
                 <button>Enquire Now</button>
                 <p>Get free details instantly via email</p>
@@ -141,7 +222,6 @@ function PharmacyDetails() {
               </p>
             </div>
             {email ? <p> 📧 Email: {email}</p> : <></>}
-
             <p> 📞 Phone number: {phoneNumber}</p>
             <p>
               {" "}
@@ -162,7 +242,7 @@ function PharmacyDetails() {
 
         <section className="page-main">
           <div className="specialization">
-            <p className="sub-title">💬 Specialiaztion</p>
+            <p className="sub-title">💬 Specialization</p>
             <div className="type">
               {specialized &&
                 specialized.length > 0 &&
@@ -190,9 +270,49 @@ function PharmacyDetails() {
           </div>
           <div className="banner-right">
             <div className="booknow">
-              <button>Order Medicines</button>
+              <button onClick={bookAppointment}>Order now</button>
             </div>
           </div>
+        </section>
+        <section className="">
+          {bookingPortal &&
+            (!cookies.token ? (
+              <p className="alert">Please login to book appointment.</p>
+            ) : cookies.address == "undefined" || "" || null ? (
+              <p className="alert">
+                Please update your profile to book appointment.
+              </p>
+            ) : (
+              <form
+                onSubmit={submitBookAppointment}
+                className="appointment-form"
+              >
+                <div className="appointment-inputs">
+                  <div className="appointment-input">
+                    <label htmlFor="prescription">Add Prescription</label>
+                    <input
+                      type="file"
+                      multiple
+                      onChange={handlePrescriptionChange}
+                      required
+                    />
+                  </div>
+                  <div className="appointment-input">
+                    <label htmlFor="instruction">Add Instructions</label>
+                    <textarea
+                      id="instruction"
+                      name="instruction"
+                      value={instruction}
+                      onChange={(e) => setInstructions(e.target.value)}
+                      required
+                    />
+                  </div>
+                  <button type="submit">
+                    {bookLoading ? "Placing Order..." : "Place Order"}
+                  </button>
+                </div>
+              </form>
+            ))}
         </section>
       </div>
     </>

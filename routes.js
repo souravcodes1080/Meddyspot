@@ -103,3 +103,19 @@ const appointment = {
     address: "123 Main St, City, Country",
   },
 };
+
+//order
+const placeOrder = "http://localhost:8080/api/order/place"
+const getUserOrderDetail = "http://localhost:8080/api/order/getUserOrders"
+
+
+const order = {
+  user: "66785033d356960cc1f31044",
+  prescription: ["photo"],
+  pharmacy: "66785033d356960cc1f31044",
+  customerDetails: "Only 1 tablet",
+  name:"sourav",
+  email: "sourav@gmail.com",
+  phoneNumber: "987876566",
+  address: "13 Cornelia Street"
+}
