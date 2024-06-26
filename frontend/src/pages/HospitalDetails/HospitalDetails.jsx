@@ -295,7 +295,7 @@ function HospitalDetails() {
                     </select>
                   </div>
                   <div className="appointment-input">
-                    <label htmlFor="appointmentDate">Appointment Date:</label>
+                    <label htmlFor="appointmentDate">Appointment Date</label>
                     <input
                     
                       type="date"
@@ -307,7 +307,7 @@ function HospitalDetails() {
                     />
                   </div>
                   <div className="appointment-input">
-                    <label htmlFor="appointmentTime">Appointment Time:</label>
+                    <label htmlFor="appointmentTime">Appointment Time</label>
                     <input
                       type="time"
                       id="appointmentTime"
