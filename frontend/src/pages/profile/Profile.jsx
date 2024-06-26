@@ -8,11 +8,13 @@ import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 function Profile() {
   const navigate = useNavigate();
-  const [cookies, setCookie,removeCookie] = useCookies([
+  const [cookies, setCookie, removeCookie] = useCookies([
     "token",
     "name",
     "email",
     "phoneNumber",
+    "lat",
+    "long",
   ]);
   const [name, setName] = useState(cookies["name"]);
   const [email, setEmail] = useState(cookies["email"]);
@@ -23,7 +25,7 @@ function Profile() {
   const [weight, setWeight] = useState("");
   const [bloodGroup, setBloodGroup] = useState("");
   const [address, setAddress] = useState("");
-
+  const [location, setLocation] = useState({ lat: null, long: null });
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     if (!cookies["token"]) {
@@ -56,6 +58,27 @@ function Profile() {
       // toast.error("An error occurred while fetching user details");
       console.log(error);
       setLoading(false);
+    }
+  };
+
+  const updateLocation = async () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          const lat = position.coords.latitude;
+          const long = position.coords.longitude;
+          setLocation({ lat, long });
+          setCookie("lat", lat);
+          setCookie("long", long);
+        },
+        (error) => {
+          console.error("Error getting location", error);
+          toast.error("Error getting location.");
+        }
+      );
+    } else {
+      console.error("Geolocation is not supported by the browser.");
+      toast.error("Geolocation is not supported by the browser.");
     }
   };
   const update = async (e) => {
@@ -93,16 +116,16 @@ function Profile() {
       setLoading(false);
     }
   };
-  const logout = async () =>{
+  const logout = async () => {
     //clear cookies
-    removeCookie("name")
-    removeCookie("phoneNumber")
-    removeCookie("email")
-    removeCookie("lat")
-    removeCookie("long")
-    removeCookie("token")
-    navigate("/")
-  }
+    removeCookie("name");
+    removeCookie("phoneNumber");
+    removeCookie("email");
+    removeCookie("lat");
+    removeCookie("long");
+    removeCookie("token");
+    navigate("/");
+  };
   return (
     <>
       <div className="signup-wrapper">
@@ -205,10 +228,15 @@ function Profile() {
               </div>
             </div>
             <div className="profile-button">
+              <button onClick={updateLocation} className="update-location">
+                {loading ? <>Changing...</> : <>Change Location</>}
+              </button>
               <button type="submit" className="update">
                 {loading ? <>Updating...</> : <>Update</>}
               </button>
-              <button className="logout" onClick={logout}>Logout</button>
+              <button className="logout" onClick={logout}>
+                Logout
+              </button>
             </div>
           </form>{" "}
         </div>

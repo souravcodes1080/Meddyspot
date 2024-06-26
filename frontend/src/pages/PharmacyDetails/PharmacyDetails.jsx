@@ -4,8 +4,10 @@ import location from "../../../public/assets/location.png";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useCookies } from "react-cookie";
 function PharmacyDetails() {
   const { id } = useParams();
+  const [cookie] = useCookies("token");
   const [pharmacyDetails, setPharmacyDetails] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -102,10 +104,14 @@ function PharmacyDetails() {
               <div className="share">🔗 Share</div>
               <div className="heart">💓</div>
             </div>
-            <div className="booknow">
-              <button>Enquire Now</button>
-              <p>Get free details instantly via email</p>
-            </div>
+            {cookie["token"] ? (
+              <div className="booknow">
+                <button>Enquire Now</button>
+                <p>Get free details instantly via email</p>
+              </div>
+            ) : (
+              <></>
+            )}
           </div>
         </section>
         <section className="page-main">
@@ -134,6 +140,9 @@ function PharmacyDetails() {
                 {city}, {state}, {pincode}
               </p>
             </div>
+            {email ? <p> 📧 Email: {email}</p> : <></>}
+
+            <p> 📞 Phone number: {phoneNumber}</p>
             <p>
               {" "}
               ↗️{" "}
@@ -163,7 +172,6 @@ function PharmacyDetails() {
                   </span>
                 ))}
             </div>
-           
           </div>
         </section>
 

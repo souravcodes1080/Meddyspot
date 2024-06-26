@@ -6,10 +6,12 @@ import call from "../../../public/assets/call.png";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useCookies } from "react-cookie";
 function HospitalDetails() {
   const { id } = useParams();
   const [hospitalDetails, setHospitalDetails] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [cookie] = useCookies("token")
 
   useEffect(() => {
     fetchHospitalDetails();
@@ -104,10 +106,15 @@ function HospitalDetails() {
               <div className="share">🔗 Share</div>
               <div className="heart">💓</div>
             </div>
-            <div className="booknow">
-              <button>Enquire Now</button>
-              <p>Get free details instantly via email</p>
-            </div>
+         
+            {cookie["token"] ? (
+              <div className="booknow">
+                <button>Enquire Now</button>
+                <p>Get free details instantly via email</p>
+              </div>
+            ) : (
+              <></>
+            )}
           </div>
         </section>
         <section className="page-main">
@@ -136,6 +143,8 @@ function HospitalDetails() {
                 {city}, {state}, {pincode}
               </p>
             </div>
+            <p> 📧 Email: {email}</p>
+            <p> 📞 Phone number: {phoneNumber}</p>
             <p>
               {" "}
               ↗️{" "}

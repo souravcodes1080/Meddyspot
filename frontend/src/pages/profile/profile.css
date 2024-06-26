@@ -47,6 +47,10 @@ textarea{
     justify-content: center;
     gap: 20px;
 }
+.update-location{
+    background-color: rgb(211, 211, 211) !important;
+    color: black !important;
+}
 .update{
     width: 80px !important;
 }

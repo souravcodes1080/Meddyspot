@@ -17,6 +17,7 @@ import PharmacyList from "./pages/List/PharmacyList";
 import ClinicList from "./pages/List/ClinicList";
 import NursinghomeList from "./pages/List/NursinghomeList";
 import HospitalList from "./pages/List/HospitalList";
+import Search from "./pages/SearchPage/Search";
 function App() {
   useScrollToTop();
 
@@ -35,6 +36,8 @@ function App() {
         <Route path="/nursinghome" element={<NursinghomeList />} />
         <Route path="/clinic" element={<ClinicList />} />
         <Route path="/pharmacy" element={<PharmacyList />} />
+        <Route path="/search" element={<Search />} />
+
       </Routes>
       <Footer />
 
