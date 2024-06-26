@@ -193,7 +193,7 @@ function Homepage() {
                 </Link>
               ))
             ) : (
-              <p>No hospitals found near your location.</p>
+              <p>Loading...</p>
             )}
           </div>
         </div>
@@ -216,7 +216,7 @@ function Homepage() {
                 </Link>
               ))
             ) : (
-              <p>No pharmacies found near your location.</p>
+              <p>Loading...</p>
             )}
           </div>
         </div>
