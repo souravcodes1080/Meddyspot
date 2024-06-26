@@ -1,38 +1,36 @@
 import React, { useEffect, useState } from "react";
-import "./hospitalDetails.css";
+import "./pharmacyDetails.css";
 import location from "../../../public/assets/location.png";
-import call from "../../../public/assets/call.png";
-// import topRated from "../../../public/assets/topated.png";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
-function HospitalDetails() {
+function PharmacyDetails() {
   const { id } = useParams();
-  const [hospitalDetails, setHospitalDetails] = useState([]);
+  const [pharmacyDetails, setPharmacyDetails] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    fetchHospitalDetails();
+    fetchPharmacyDetails();
   }, []);
 
-  const fetchHospitalDetails = async () => {
+  const fetchPharmacyDetails = async () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        `http://localhost:8080/api/hospital/getById/${id}`
+        `http://localhost:8080/api/pharmacy/getById/${id}`
       );
 
       if (response.data.success) {
         setLoading(false);
-        setHospitalDetails(response.data.hospital);
-        console.log(response.data.hospital);
+        setPharmacyDetails(response.data.pharmacy);
+        console.log(response.data.pharmacy);
       } else {
         setLoading(false);
-        toast.error("Error fetching hospital details.");
+        toast.error("Error fetching pharmacy details.");
       }
     } catch (error) {
       console.log(error);
-      toast.error("Error fetching hospital details.");
+      toast.error("Error fetching pharmacy details.");
     }
   };
 
@@ -40,7 +38,7 @@ function HospitalDetails() {
     return <div className="container">Loading...</div>;
   }
 
-  if (!hospitalDetails) {
+  if (!pharmacyDetails) {
     return <div className="container">No details available.</div>;
   }
 
@@ -48,7 +46,7 @@ function HospitalDetails() {
     name,
     email,
     phoneNumber,
-    image,
+    storePic,
     type,
     desc,
     specialized,
@@ -63,7 +61,7 @@ function HospitalDetails() {
     gmapLink,
     website,
     rating,
-  } = hospitalDetails;
+  } = pharmacyDetails;
   return (
     <>
       <div className="container">
@@ -95,7 +93,7 @@ function HospitalDetails() {
           <div className="flex">
             <div className="phone">
               <div className="call">
-                <img src={call} alt="" width={"22px"} />
+                📞
                 {phoneNumber}
               </div>
 
@@ -114,9 +112,9 @@ function HospitalDetails() {
           <div className="photo">
             <p className="sub-title">Photos</p>
             <div className="gallery">
-              {image &&
-                image.length > 0 &&
-                image.map((img, index) => (
+              {storePic &&
+                storePic.length > 0 &&
+                storePic.map((img, index) => (
                   <img
                     key={index}
                     src={`http://localhost:8080/${img}`}
@@ -165,20 +163,7 @@ function HospitalDetails() {
                   </span>
                 ))}
             </div>
-            <p className="sub-title">👨🏻‍⚕️ Doctors</p>
-            <div className="doctor">
-              {doctor && doctor.length > 0 ? (
-                doctor.map((d, index) => (
-                  <div key={index}>
-                    <img src={`http://localhost:8080/${d.profilePic}`} alt="" />
-                    <p>{d.name}</p>
-                    <p className="specialized">{d.specialized}</p>
-                  </div>
-                ))
-              ) : (
-                <p>No doctors listed.</p>
-              )}
-            </div>
+           
           </div>
         </section>
 
@@ -197,7 +182,7 @@ function HospitalDetails() {
           </div>
           <div className="banner-right">
             <div className="booknow">
-              <button>Book an Appointment</button>
+              <button>Order Medicines</button>
             </div>
           </div>
         </section>
@@ -206,4 +191,4 @@ function HospitalDetails() {
   );
 }
 
-export default HospitalDetails;
+export default PharmacyDetails;

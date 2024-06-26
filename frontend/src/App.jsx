@@ -11,7 +11,15 @@ import Verify from "./pages/Signin/Verify";
 import Profile from "./pages/profile/Profile";
 import Footer from "./components/Footer/Footer";
 import HospitalDetails from "./pages/HospitalDetails/HospitalDetails";
+import PharmacyDetails from "./pages/PharmacyDetails/PharmacyDetails";
+import useScrollToTop from "./hooks/useScrollToTop";
+import PharmacyList from "./pages/List/PharmacyList";
+import ClinicList from "./pages/List/ClinicList";
+import NursinghomeList from "./pages/List/NursinghomeList";
+import HospitalList from "./pages/List/HospitalList";
 function App() {
+  useScrollToTop();
+
   return (
     <div className="app-container">
       <Header />
@@ -22,9 +30,13 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/hospital/:id" element={<HospitalDetails />} />
-
+        <Route path="/pharmacy/:id" element={<PharmacyDetails />} />
+        <Route path="/hospital" element={<HospitalList />} />
+        <Route path="/nursinghome" element={<NursinghomeList />} />
+        <Route path="/clinic" element={<ClinicList />} />
+        <Route path="/pharmacy" element={<PharmacyList />} />
       </Routes>
-      <Footer/>
+      <Footer />
 
       <ToastContainer
         position="bottom-center"

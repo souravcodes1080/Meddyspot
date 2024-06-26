@@ -24,7 +24,7 @@ function Footer() {
                     <div className='logo'>
                         <img src={logo} alt="" />
                         <p className='style'>MED & CARE</p>
-                        <p className='copyright'>&#169; 2024 Aoiefy13, copyrights reserved</p>
+                        <p className='copyright'>&#169; 2024 Aoife13, copyrights reserved</p>
                     </div>
                     <div className="feature">
                         <p>Quick Links</p>
@@ -37,7 +37,7 @@ function Footer() {
                         </ul>
                     </div>
                     <div className="locations">
-                        <p>Our locations</p>
+                        <p>Locations</p>
                         <ul>
                             <li>Siliguri</li>
                             <li>Kolkata</li>
