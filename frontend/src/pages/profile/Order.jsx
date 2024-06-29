@@ -69,7 +69,7 @@ function Order() {
             <div className="items">
               {orderData.map((order) => (
                 <div key={order._id} className="order-item">
-                  <p>{order.pharmacy.name}</p>
+                  <p>{order.pharmacy && order.pharmacy.name}</p>
 
                   <p>{order.instruction}</p>
                   <p>{order.status}</p>

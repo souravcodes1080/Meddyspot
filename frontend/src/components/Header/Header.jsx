@@ -29,7 +29,9 @@ function Header() {
 
               <li>Book Appointment</li>
               <li>Pharmacy</li>
-              <li>About Us</li>
+              <Link className="link" to={"/labtests"}>
+                <li>Lab Tests</li>
+              </Link>
             </ul>
           </div>
           <div className="header-right">

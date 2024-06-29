@@ -119,3 +119,32 @@ const order = {
   phoneNumber: "987876566",
   address: "13 Cornelia Street"
 }
+
+
+//pharmacy
+const addLab = "http://localhost:8080/api/lab/add";
+const getLabByid = "http://localhost:8080/api/lab/getbyId/:id";
+const searchLab = "http://localhost:8080/api/lab/search?query=";
+const nearbyLab = "http://localhost:8080/api/lab/nearby?lat=&long=";
+const updateLab = "http://localhost:8080/api/lab/update/:id";
+//do not update picture, its bugged rn
+
+const lab = {
+  name: "HealthPlus Pharmacy",
+  email: "healthplus@example.com",
+  phoneNumber: 9876543210,
+  labPic ["storePic1.jpg", "storePic2.jpg"],
+  lat: 22.5726,
+  long: 88.3639,
+  address: "456, Main Road",
+  city: "Kolkata",
+  state: "West Bengal",
+  pincode: 700018,
+  gmapLink: "https://goo.gl/maps/example",
+  website: "http://www.healthpluspharmacy.com",
+  rating: 4.2,
+  location: {
+    type: "Point",
+    coordinates: [88.3639, 22.5726],
+  },
+};

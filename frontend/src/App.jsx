@@ -19,6 +19,7 @@ import NursinghomeList from "./pages/List/NursinghomeList";
 import HospitalList from "./pages/List/HospitalList";
 import Search from "./pages/SearchPage/Search";
 import Order from "./pages/profile/Order";
+import Labtest from "./pages/Labtest/Labtest";
 function App() {
   useScrollToTop();
 
@@ -39,7 +40,8 @@ function App() {
         <Route path="/clinic" element={<ClinicList />} />
         <Route path="/pharmacy" element={<PharmacyList />} />
         <Route path="/search" element={<Search />} />
-
+        <Route path="/labtests" element={<Labtest />} />
+        
       </Routes>
       <Footer />
 
